@@ -1,0 +1,283 @@
+[
+  {
+    "name": "azimuth",
+    "additional-info": "https://www.quackit.com/css/properties/css_azimuth.cfm"
+  },
+  {
+    "name": "scroll-snap-points-x",
+    "additional-info": "https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-points-x"
+  },
+  {
+    "name": "scroll-snap-points-y",
+    "additional-info": "https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-points-y"
+  },
+  {
+    "name": "scroll-snap-coordinate",
+    "additional-info": "https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-coordinate"
+  },
+  {
+    "name": "scroll-snap-destination",
+    "additional-info": "https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-destination"
+  },
+  {
+    "name": "scroll-blocks-on",
+    "reason": "unsure"
+  },
+  {
+    "name": "render-subtree",
+    "reason": "unsure"
+  },
+  {
+    "name": "letter-spacing-override",
+    "reason": "unsure"
+  },
+  {
+    "name": "internal-callback",
+    "reason": "unsure"
+  },
+  {
+    "name": "scroll-boundary-behavior",
+    "use-instead": "overscroll-behavior"
+  },
+  {
+    "name": "scroll-boundary-behavior-x",
+    "use-instead": "overscroll-behavior-x"
+  },
+  {
+    "name": "scroll-boundary-behavior-y",
+    "use-instead": "overscroll-behavior-y"
+  },
+  {
+    "name": "grid-column-gap",
+    "use-instead": "column-gap"
+  },
+  {
+    "name": "scroll-snap-margin-left",
+    "use-instead": "scroll-margin-left"
+  },
+  {
+    "name": "scroll-snap-margin-right",
+    "use-instead": "scroll-margin-right"
+  },
+  {
+    "name": "scroll-snap-margin-block-end",
+    "use-instead": "scroll-margin-block-end"
+  },
+  {
+    "name": "scroll-snap-margin-block-start",
+    "use-instead": "scroll-margin-block-start"
+  },
+  {
+    "name": "scroll-snap-margin-inline-start",
+    "use-instead": "scroll-margin-inline-start"
+  },
+  {
+    "name": "scroll-snap-margin-inline-end",
+    "use-instead": "scroll-margin-inline-end"
+  },
+  {
+    "name": "text-line-through",
+    "reason": "unsure"
+  },
+  {
+    "name": "text-line-through-mode",
+    "reason": "unsure"
+  },
+  {
+    "name": "text-line-through-style",
+    "reason": "unsure"
+  },
+  {
+    "name": "text-line-through-width",
+    "reason": "unsure"
+  },
+  {
+    "name": "page-break-before",
+    "use-instead": "break-before",
+    "additional-info": "https://github.com/w3c/csswg-drafts/blob/725bc1f5cd95fa258e0edc776f02e67ed0a04d77/css-break-4/Overview.bs#L473"
+  },
+  {
+    "name": "page-break-after",
+    "use-instead": "break-after",
+    "additional-info": "https://github.com/w3c/csswg-drafts/blob/725bc1f5cd95fa258e0edc776f02e67ed0a04d77/css-break-4/Overview.bs#L473"
+  },
+  {
+    "name": "page-break-inside",
+    "use-instead": "break-inside",
+    "additional-info": "https://github.com/w3c/csswg-drafts/blob/725bc1f5cd95fa258e0edc776f02e67ed0a04d77/css-break-4/Overview.bs#L473"
+  },
+  {
+    "name": "bleed"
+  },
+  {
+    "name": "richness",
+    "additional-info": "https://www.quackit.com/css/properties/css_richness.cfm"
+  },
+  {
+    "name": "clip",
+    "use-instead": "clip-path",
+    "additional-info": "https://developer.mozilla.org/en-US/docs/Web/CSS/clip"
+  },
+  {
+    "name": "color-profile",
+    "additional-info": "https://www.cssportal.com/css-properties/color-profile.php"
+  },
+  {
+    "name": "crop",
+    "additional-info": "https://www.cssportal.com/css-properties/crop.php"
+  },
+  {
+    "name": "icon",
+    "additional-info": "https://www.cssportal.com/css-properties/icon.php"
+  },
+  {
+    "name": "marker-side",
+    "additional-info": "https://www.cssportal.com/css-properties/marker-side.php"
+  },
+  {
+    "name": "marker-offset",
+    "additional-info": "https://www.cssportal.com/css-properties/marker-offset.php"
+  },
+  {
+    "name": "move-to",
+    "additional-info": "https://www.cssportal.com/css-properties/move-to.php"
+  },
+  {
+    "name": "page",
+    "additional-info": "https://www.cssportal.com/css-properties/page.php"
+  },
+  {
+    "name": "rendering-intent",
+    "additional-info": "https://www.cssportal.com/css-properties/rendering-intent.php"
+  },
+  {
+    "name": "rotation",
+    "additional-info": "https://www.cssportal.com/css-properties/rotation.php"
+  },
+  {
+    "name": "size",
+    "additional-info": "https://www.cssportal.com/css-properties/size.php"
+  },
+  {
+    "name": "stress",
+    "use-instead": "voice-stress",
+    "additional-info": "https://www.cssportal.com/css-properties/stress.php"
+  },
+  {
+    "name": "target-name",
+    "additional-info": "https://www.cssportal.com/css-properties/target-name.php"
+  },
+  {
+    "name": "target",
+    "additional-info": "https://www.cssportal.com/css-properties/target.php"
+  },
+  {
+    "name": "target-position",
+    "additional-info": "https://www.cssportal.com/css-properties/target-position.php"
+  },
+  {
+    "name": "text-height",
+    "additional-info": "https://www.cssportal.com/css-properties/text-height.php"
+  },
+  {
+    "name": "volume",
+    "use-instead": "voice-volume",
+    "additional-info": "https://www.cssportal.com/css-properties/volume.php"
+  },
+  {
+    "name": "snap-height"
+  },
+  {
+    "name": "subtree-visibility",
+    "reason": "was renamed to content-visibility",
+    "additional-info": "https://github.com/w3c/csswg-drafts/issues/4843"
+  },
+  {
+    "name": "min-zoom",
+    "reason": "unsure"
+  },
+  {
+    "name": "max-zoom",
+    "reason": "unsure"
+  },
+  {
+    "name": "user-zoom",
+    "reason": "unsure"
+  },
+  {
+    "name": "touch-action-delay",
+    "reason": "unsure"
+  },
+  {
+    "name": "text-overline"
+  },
+  {
+    "name": "text-overline-color"
+  },
+  {
+    "name": "text-overline-mode"
+  },
+  {
+    "name": "text-overline-style"
+  },
+  {
+    "name": "text-overline-width"
+  },
+  {
+    "name": "text-underline"
+  },
+  {
+    "name": "text-underline-color"
+  },
+  {
+    "name": "text-underline-width"
+  },
+  {
+    "name": "text-underline-mode"
+  },
+  {
+    "name": "text-underline-style"
+  },
+  {
+    "name": "kerning",
+    "additional-info": "https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/kerning"
+  },
+  {
+    "name": "grid-gap",
+    "use-instead": "gap"
+  },
+  {
+    "name": "grid-row-gap",
+    "use-instead": "row-gap"
+  },
+  {
+    "name": "scroll-snap-margin",
+    "use-instead": "scroll-margin"
+  },
+  {
+    "name": "scroll-snap-margin-bottom",
+    "use-instead": "scroll-margin-bottom"
+  },
+  {
+    "name": "scroll-snap-margin-inline",
+    "use-instead": "scroll-margin-inline"
+  },
+  {
+    "name": "scroll-snap-margin-block",
+    "use-instead": "scroll-margin-block"
+  },
+  {
+    "name": "scroll-snap-margin-top",
+    "use-instead": "scroll-margin-top"
+  },
+  {
+    "name": "origin-trial-test-property",
+    "reason": "not a real property"
+  },
+  {
+    "name": "zoom"
+  },
+  {
+    "name": "text-line-through-color"
+  }
+]
