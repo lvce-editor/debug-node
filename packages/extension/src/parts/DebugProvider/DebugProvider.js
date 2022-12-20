@@ -1,3 +1,6 @@
+import * as DevtoolsCommandType from '../DevtoolsCommandType/DevtoolsCommandType.js'
+import { DevtoolsProtocolError } from '../DevtoolsProtocolError/DevtoolsProtocolError.js'
+
 export const id = 'node-debug'
 
 const handleMessage = (event) => {
@@ -84,40 +87,46 @@ const createDevtoolsProtocol = (rpc) => {
   return {
     Runtime: {
       async evaluate({ expression }) {
-        const rawResult = await rpc.invoke('Runtime.evaluate', {
-          expression,
-        })
+        const rawResult = await rpc.invoke(
+          DevtoolsCommandType.RuntimeEvaluate,
+          {
+            expression,
+          }
+        )
         const result = unwrapResult(rawResult)
         return result
       },
     },
     Debugger: {
       async enable() {
-        const rawResult = await rpc.invoke('Debugger.enable')
+        const rawResult = await rpc.invoke(DevtoolsCommandType.DebuggerEnable)
         return rawResult.result.debuggerId
       },
       async disable() {
-        const rawResult = await rpc.invoke('Debugger.disable')
+        const rawResult = await rpc.invoke(DevtoolsCommandType.DebuggerDisable)
         console.log(rawResult)
       },
       async pause() {
-        const rawResult = await rpc.invoke('Debugger.pause')
+        const rawResult = await rpc.invoke(DevtoolsCommandType.DebuggerPause)
         if ('error' in rawResult) {
-          throw new Error(rawResult.error.message)
+          throw new DevtoolsProtocolError(rawResult.error.message)
         }
       },
       async resume() {
-        const rawResult = await rpc.invoke('Debugger.resume')
+        const rawResult = await rpc.invoke(DevtoolsCommandType.DebuggerResume)
         if ('error' in rawResult) {
-          throw new Error(rawResult.error.message)
+          throw new DevtoolsProtocolError(rawResult.error.message)
         }
       },
       async setPauseOnExceptions({ state }) {
-        const rawResult = await rpc.invoke('Debugger.setPauseOnExceptions', {
-          state,
-        })
+        const rawResult = await rpc.invoke(
+          DevtoolsCommandType.DebuggerSetPauseOnExceptions,
+          {
+            state,
+          }
+        )
         if ('error' in rawResult) {
-          throw new Error(rawResult.error.message)
+          throw new DevtoolsProtocolError(rawResult.error.message)
         }
       },
     },
