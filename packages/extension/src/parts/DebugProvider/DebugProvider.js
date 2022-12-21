@@ -1,47 +1,8 @@
 import * as DevtoolsCommandType from '../DevtoolsCommandType/DevtoolsCommandType.js'
-import { DevtoolsProtocolError } from '../DevtoolsProtocolError/DevtoolsProtocolError.js'
+import * as DevtoolsProtocol from '../DevtoolsProtocol/DevtoolsProtocol.js'
+import * as Ipc from '../Ipc/Ipc.js'
 
 export const id = 'node-debug'
-
-const handleMessage = (event) => {
-  console.log(event)
-}
-
-const createIpc = async (wsUrl) => {
-  const webSocket = new WebSocket(wsUrl)
-  await new Promise((resolve, reject) => {
-    const cleanup = () => {
-      webSocket.removeEventListener('open', handleOpen)
-      webSocket.removeEventListener('error', handleError)
-    }
-
-    const handleOpen = () => {
-      cleanup()
-      resolve(undefined)
-    }
-    const handleError = (event) => {
-      cleanup()
-      reject(new Error(`Failed to start websocket`))
-    }
-    webSocket.addEventListener('open', handleOpen)
-    webSocket.addEventListener('error', handleError)
-  })
-  return {
-    send(message) {
-      webSocket.send(JSON.stringify(message, null, 2))
-    },
-    get onmessage() {
-      return webSocket.onmessage
-    },
-    set onmessage(listener) {
-      const handleMessage = (event) => {
-        const parsed = JSON.parse(event.data)
-        listener(parsed)
-      }
-      webSocket.onmessage = handleMessage
-    },
-  }
-}
 
 const createRpc = (ipc) => {
   const callbacks = Object.create(null)
@@ -52,9 +13,16 @@ const createRpc = (ipc) => {
       } else if ('error' in message) {
         callbacks[message.id].resolve(message)
       }
+    } else {
+      const listener = listeners[message.method]
+      if (listener) {
+        listener(message)
+      }
     }
   }
   ipc.onmessage = handleMessage
+
+  const listeners = Object.create(null)
   let _id = 0
   return {
     invoke(method, params) {
@@ -68,67 +36,8 @@ const createRpc = (ipc) => {
         })
       })
     },
-  }
-}
-
-const unwrapResult = (result) => {
-  switch (
-    result.result.result.type // yes, really
-  ) {
-    case 'number':
-    case 'string':
-      return result.result.result.value
-    default:
-      return result
-  }
-}
-
-const createDevtoolsProtocol = (rpc) => {
-  return {
-    Runtime: {
-      async evaluate({ expression }) {
-        const rawResult = await rpc.invoke(
-          DevtoolsCommandType.RuntimeEvaluate,
-          {
-            expression,
-          }
-        )
-        const result = unwrapResult(rawResult)
-        return result
-      },
-    },
-    Debugger: {
-      async enable() {
-        const rawResult = await rpc.invoke(DevtoolsCommandType.DebuggerEnable)
-        return rawResult.result.debuggerId
-      },
-      async disable() {
-        const rawResult = await rpc.invoke(DevtoolsCommandType.DebuggerDisable)
-        console.log(rawResult)
-      },
-      async pause() {
-        const rawResult = await rpc.invoke(DevtoolsCommandType.DebuggerPause)
-        if ('error' in rawResult) {
-          throw new DevtoolsProtocolError(rawResult.error.message)
-        }
-      },
-      async resume() {
-        const rawResult = await rpc.invoke(DevtoolsCommandType.DebuggerResume)
-        if ('error' in rawResult) {
-          throw new DevtoolsProtocolError(rawResult.error.message)
-        }
-      },
-      async setPauseOnExceptions({ state }) {
-        const rawResult = await rpc.invoke(
-          DevtoolsCommandType.DebuggerSetPauseOnExceptions,
-          {
-            state,
-          }
-        )
-        if ('error' in rawResult) {
-          throw new DevtoolsProtocolError(rawResult.error.message)
-        }
-      },
+    on(event, listener) {
+      listeners[event] = listener
     },
   }
 }
@@ -138,24 +47,61 @@ const state = {
   debuggerId: '',
 }
 
-export const listProcesses = async () => {
+const getWebSocketDebuggerUrl = async () => {
   const json = await vscode.getJson('http://localhost:9229/json/list')
   const process = json[0]
   const { webSocketDebuggerUrl } = process
-  const ipc = await createIpc(webSocketDebuggerUrl)
-  const rpc = createRpc(ipc)
-  const devtoolsProtocol = createDevtoolsProtocol(rpc)
+  return { json, webSocketDebuggerUrl }
+}
 
-  const result = await devtoolsProtocol.Runtime.evaluate({
-    expression: 'globalThis.x',
-  })
-  const debuggerId = await devtoolsProtocol.Debugger.enable()
+export const start = async (emitter) => {
+  const { webSocketDebuggerUrl } = await getWebSocketDebuggerUrl()
+  const ipc = await Ipc.create(webSocketDebuggerUrl)
+  const rpc = createRpc(ipc)
+  const devtoolsProtocol = DevtoolsProtocol.create(rpc)
   state.devtoolsProtocol = devtoolsProtocol
+  const { Runtime, Debugger, Page } = devtoolsProtocol
+
+  const parsedScripts = Object.create(null)
+
+  const debuggerId = await Debugger.enable()
   state.debuggerId = debuggerId
+
+  const handleScriptParsed = (message) => {
+    const params = message.params
+    const { scriptId, url, scriptLanguage } = params
+    parsedScripts[scriptId] = { url, scriptLanguage }
+    console.log({ scriptId, url, scriptLanguage })
+    emitter.handleScriptParsed({ scriptId, url, scriptLanguage })
+  }
+  const handlePaused = (message) => {
+    emitter.handlePaused(message.params)
+  }
+  const handleResumed = (message) => {
+    emitter.handleResumed()
+  }
+  rpc.on(DevtoolsCommandType.DebuggerScriptParsed, handleScriptParsed)
+  rpc.on(DevtoolsCommandType.DebuggerPaused, handlePaused)
+  rpc.on(DevtoolsCommandType.DebuggerResumed, handleResumed)
+}
+
+export const listProcesses = async () => {
+  const { json } = await getWebSocketDebuggerUrl()
   return json
 }
 
-export const continue_ = async () => {
+export const getProperties = async (objectId) => {
+  const { devtoolsProtocol } = state
+  return devtoolsProtocol.Runtime.getProperties({
+    objectId,
+    ownProperties: false,
+    accessorPropertiesOnly: false,
+    nonIndexedPropertiesOnly: false,
+    generatePreview: true,
+  })
+}
+
+export const resume = async () => {
   const { devtoolsProtocol } = state
   await devtoolsProtocol.Debugger.resume()
 }
@@ -168,4 +114,24 @@ export const pause = async () => {
 export const setPauseOnExceptions = async (value) => {
   const { devtoolsProtocol } = state
   await devtoolsProtocol.Debugger.setPauseOnExceptions(value)
+}
+
+export const stepOver = async (value) => {
+  const { devtoolsProtocol } = state
+  await devtoolsProtocol.Debugger.stepOver(value)
+}
+
+export const stepInto = async (value) => {
+  const { devtoolsProtocol } = state
+  await devtoolsProtocol.Debugger.stepInto(value)
+}
+
+export const stepOut = async (value) => {
+  const { devtoolsProtocol } = state
+  await devtoolsProtocol.Debugger.stepOut(value)
+}
+
+export const step = async (value) => {
+  const { devtoolsProtocol } = state
+  await devtoolsProtocol.Debugger.step(value)
 }
