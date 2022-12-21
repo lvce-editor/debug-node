@@ -2,7 +2,7 @@
   "id": "builtin.debug-node",
   "name": "Debug Node",
   "description": "Debugger for NodeJS",
-  "activation": ["onDebug"],
+  "activation": ["onDebug:node-debug"],
   "browser": "src/debugNodeMain.js",
   "commands": [],
   "languages": []
