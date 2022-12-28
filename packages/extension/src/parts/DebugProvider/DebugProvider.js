@@ -135,3 +135,13 @@ export const step = async (value) => {
   const { devtoolsProtocol } = state
   await devtoolsProtocol.Debugger.step(value)
 }
+
+export const evaluate = async (expression, callFrameId) => {
+  const { devtoolsProtocol } = state
+  const result = await devtoolsProtocol.Debugger.evaluateOnCallFrame({
+    expression,
+    callFrameId,
+  })
+  console.log({ result })
+  return result
+}

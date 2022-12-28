@@ -85,6 +85,16 @@ export const create = (rpc) => {
           throw new DevtoolsProtocolError(rawResult.error.message)
         }
       },
+      async evaluateOnCallFrame(params) {
+        const rawResult = await rpc.invoke(
+          DevtoolsCommandType.DebuggerEvaluateOnCallFrame,
+          params
+        )
+        if ('error' in rawResult) {
+          throw new DevtoolsProtocolError(rawResult.error.message)
+        }
+        return rawResult
+      },
     },
     Page: {
       async setFontSizes() {

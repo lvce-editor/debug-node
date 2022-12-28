@@ -12,6 +12,8 @@ export const DebuggerResume = 'Debugger.resume'
 
 export const DebuggerSetPauseOnExceptions = 'Debugger.setPauseOnExceptions'
 
+export const DebuggerEvaluateOnCallFrame = 'Debugger.evaluateOnCallFrame'
+
 export const DebuggerScriptParsed = 'Debugger.scriptParsed'
 
 export const DebuggerPaused = 'Debugger.paused'
