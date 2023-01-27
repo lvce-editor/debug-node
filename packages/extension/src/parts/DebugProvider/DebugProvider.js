@@ -1,5 +1,6 @@
 import * as DevtoolsCommandType from '../DevtoolsCommandType/DevtoolsCommandType.js'
-import * as DevtoolsProtocol from '../DevtoolsProtocol/DevtoolsProtocol.js'
+import * as DevtoolsProtocolDebugger from '../DevtoolsProtocolDebugger/DevtoolsProtocolDebugger.js'
+import * as DevtoolsProtocolRuntime from '../DevtoolsProtocolRuntime/DevtoolsProtocolRuntime.js'
 import * as Ipc from '../Ipc/Ipc.js'
 
 export const id = 'node-debug'
@@ -45,8 +46,13 @@ const createRpc = (ipc) => {
 const state = {
   devtoolsProtocol: undefined,
   debuggerId: '',
+  rpc: undefined,
 }
 
+const getJsonList = async () => {
+  const json = await vscode.getJson('http://localhost:9229/json/list')
+  return json
+}
 const getWebSocketDebuggerUrl = async () => {
   const json = await vscode.getJson('http://localhost:9229/json/list')
   const process = json[0]
@@ -55,16 +61,24 @@ const getWebSocketDebuggerUrl = async () => {
 }
 
 export const start = async (emitter) => {
+  // try {
+  //   const jsonList = await getJsonList()
+  // } catch (error) {
+  //   console.log({ error })
+  //   if (error && error.code === ErrorCodes.ECONNREFUSED) {
+  //     // TODO no debugged process is available
+  //     console.log('conn resufsed')
+  //   }
+  //   return
+  // }
   const { webSocketDebuggerUrl } = await getWebSocketDebuggerUrl()
   const ipc = await Ipc.create(webSocketDebuggerUrl)
   const rpc = createRpc(ipc)
-  const devtoolsProtocol = DevtoolsProtocol.create(rpc)
-  state.devtoolsProtocol = devtoolsProtocol
-  const { Runtime, Debugger, Page } = devtoolsProtocol
+  state.rpc = rpc
 
   const parsedScripts = Object.create(null)
 
-  const debuggerId = await Debugger.enable()
+  const debuggerId = await DevtoolsProtocolDebugger.enable(rpc)
   state.debuggerId = debuggerId
 
   const handleScriptParsed = (message) => {
@@ -75,6 +89,7 @@ export const start = async (emitter) => {
     emitter.handleScriptParsed({ scriptId, url, scriptLanguage })
   }
   const handlePaused = (message) => {
+    console.log('debugger is paused')
     emitter.handlePaused(message.params)
   }
   const handleResumed = (message) => {
@@ -91,8 +106,8 @@ export const listProcesses = async () => {
 }
 
 export const getProperties = async (objectId) => {
-  const { devtoolsProtocol } = state
-  return devtoolsProtocol.Runtime.getProperties({
+  const { rpc } = state
+  return DevtoolsProtocolRuntime.getProperties(rpc, {
     objectId,
     ownProperties: false,
     accessorPropertiesOnly: false,
@@ -102,43 +117,43 @@ export const getProperties = async (objectId) => {
 }
 
 export const resume = async () => {
-  const { devtoolsProtocol } = state
-  await devtoolsProtocol.Debugger.resume()
+  const { rpc } = state
+  await DevtoolsProtocolDebugger.resume(rpc)
 }
 
 export const pause = async () => {
-  const { devtoolsProtocol } = state
-  await devtoolsProtocol.Debugger.pause()
+  const { rpc } = state
+  await DevtoolsProtocolDebugger.pause(rpc)
 }
 
 export const setPauseOnExceptions = async (value) => {
-  const { devtoolsProtocol } = state
-  await devtoolsProtocol.Debugger.setPauseOnExceptions(value)
+  const { rpc } = state
+  await DevtoolsProtocolDebugger.setPauseOnExceptions(rpc, value)
 }
 
 export const stepOver = async (value) => {
-  const { devtoolsProtocol } = state
-  await devtoolsProtocol.Debugger.stepOver(value)
+  const { rpc } = state
+  await DevtoolsProtocolDebugger.stepOver(rpc, value)
 }
 
 export const stepInto = async (value) => {
-  const { devtoolsProtocol } = state
-  await devtoolsProtocol.Debugger.stepInto(value)
+  const { rpc } = state
+  await DevtoolsProtocolDebugger.stepInto(rpc, value)
 }
 
 export const stepOut = async (value) => {
-  const { devtoolsProtocol } = state
-  await devtoolsProtocol.Debugger.stepOut(value)
+  const { rpc } = state
+  await DevtoolsProtocolDebugger.stepOut(rpc, value)
 }
 
 export const step = async (value) => {
-  const { devtoolsProtocol } = state
-  await devtoolsProtocol.Debugger.step(value)
+  const { rpc } = state
+  await DevtoolsProtocolDebugger.step(rpc, value)
 }
 
 export const evaluate = async (expression, callFrameId) => {
-  const { devtoolsProtocol } = state
-  const result = await devtoolsProtocol.Debugger.evaluateOnCallFrame({
+  const { rpc } = state
+  const result = await DevtoolsProtocolDebugger.evaluateOnCallFrame(rpc, {
     expression,
     callFrameId,
   })
