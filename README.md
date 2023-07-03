@@ -1,5 +1,7 @@
 # builtin.debug-node
 
+![demo](./demo.png)
+
 ## Contributing
 
 ```sh
