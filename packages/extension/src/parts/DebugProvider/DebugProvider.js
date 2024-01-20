@@ -1,12 +1,22 @@
 import * as DebugWorker from '../DebugWorker/DebugWorker.js'
+import * as PathState from '../PathState/PathState.js'
 
 export const id = 'node-debug'
 
+const execute = async (method, ...params) => {
+  console.log('got message')
+  if (method === 'Ajax.getJson') {
+    const nodePath = PathState.state.path + '/../node/src/nodeMain.js'
+    const nodeRpc = await vscode.createNodeRpc({
+      path: nodePath,
+      name: 'Debug Worker',
+    })
+    return nodeRpc.invoke('Ajax.getJson', ...params)
+  }
+}
+
 export const start = async (emitter) => {
   console.log('start debug')
-  const execute = (message) => {
-    console.log('got message', message)
-  }
   const rpc = await DebugWorker.getInstance(execute)
   await rpc.invoke('Debug.start')
   // try {
@@ -46,7 +56,6 @@ export const start = async (emitter) => {
 }
 
 export const listProcesses = async () => {
-  console.log('list them')
   return []
 }
 

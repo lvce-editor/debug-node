@@ -52,6 +52,7 @@ const state = {
 
 const getWebSocketDebuggerUrl = async () => {
   const json = await GetJson.getJson('http://localhost:9229/json/list')
+  console.log({ json })
   const process = json[0]
   const { webSocketDebuggerUrl } = process
   return { json, webSocketDebuggerUrl }
