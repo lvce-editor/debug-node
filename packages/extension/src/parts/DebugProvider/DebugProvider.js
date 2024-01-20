@@ -15,8 +15,15 @@ const getJson = async (...params) => {
 }
 
 const execute = async (method, ...params) => {
+  const emitter = _emitter
   if (method === 'Ajax.getJson') {
     return getJson(...params)
+  } else if (method === 'Debug.handleScriptPaused') {
+    emitter.handlePaused(...params)
+  } else if (method === 'Debug.handleScriptParsed') {
+    emitter.handleScriptParsed(...params)
+  } else if (method === 'Debug.handleResumed') {
+    emitter.handleResumed(...params)
   } else {
     console.log({ method })
   }
