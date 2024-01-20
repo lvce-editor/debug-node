@@ -7,24 +7,25 @@ export const state = {
   rpcPromise: undefined,
 }
 
-const createRpc = async () => {
+const createRpc = async (execute) => {
   const workerUrl = DebugWorkerUrl.getDebugWorkerUrl()
   const rpc = await vscode.createRpc({
     type: 'worker',
     url: workerUrl,
     name: 'Debug Worker',
+    execute,
   })
   return rpc
 }
 
-const getOrCreateRpc = async () => {
+const getOrCreateRpc = async (execute) => {
   if (!state.rpcPromise) {
-    state.rpcPromise = createRpc()
+    state.rpcPromise = createRpc(execute)
   }
   return state.rpcPromise
 }
 
-export const getInstance = async () => {
-  const rpc = await getOrCreateRpc()
+export const getInstance = async (execute) => {
+  const rpc = await getOrCreateRpc(execute)
   return rpc
 }
