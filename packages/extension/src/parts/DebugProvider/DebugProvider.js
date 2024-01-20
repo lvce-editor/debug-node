@@ -1,5 +1,6 @@
 import * as DevtoolsCommandType from '../DevtoolsCommandType/DevtoolsCommandType.js'
 import * as DevtoolsProtocolDebugger from '../DevtoolsProtocolDebugger/DevtoolsProtocolDebugger.js'
+import * as GetJson from '../GetJson/GetJson.js'
 import * as DevtoolsProtocolRuntime from '../DevtoolsProtocolRuntime/DevtoolsProtocolRuntime.js'
 import * as Ipc from '../Ipc/Ipc.js'
 
@@ -49,12 +50,8 @@ const state = {
   rpc: undefined,
 }
 
-const getJsonList = async () => {
-  const json = await vscode.getJson('http://localhost:9229/json/list')
-  return json
-}
 const getWebSocketDebuggerUrl = async () => {
-  const json = await vscode.getJson('http://localhost:9229/json/list')
+  const json = await GetJson.getJson('http://localhost:9229/json/list')
   const process = json[0]
   const { webSocketDebuggerUrl } = process
   return { json, webSocketDebuggerUrl }
