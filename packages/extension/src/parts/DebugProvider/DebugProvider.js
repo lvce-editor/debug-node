@@ -1,6 +1,4 @@
 import * as DebugWorker from '../DebugWorker/DebugWorker.js'
-import * as DevtoolsProtocolDebugger from '../DevtoolsProtocolDebugger/DevtoolsProtocolDebugger.js'
-import * as DevtoolsProtocolRuntime from '../DevtoolsProtocolRuntime/DevtoolsProtocolRuntime.js'
 
 export const id = 'node-debug'
 
