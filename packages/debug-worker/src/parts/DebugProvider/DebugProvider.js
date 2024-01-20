@@ -71,13 +71,11 @@ export const start = async (emitter) => {
   // }
   const { webSocketDebuggerUrl } = await getWebSocketDebuggerUrl()
   const ipc = await Ipc.create(webSocketDebuggerUrl)
+  console.log('created ipc')
   const rpc = createRpc(ipc)
   state.rpc = rpc
 
   const parsedScripts = Object.create(null)
-
-  const debuggerId = await DevtoolsProtocolDebugger.enable(rpc)
-  state.debuggerId = debuggerId
 
   const handleScriptParsed = (message) => {
     const params = message.params
@@ -96,6 +94,9 @@ export const start = async (emitter) => {
   rpc.on(DevtoolsCommandType.DebuggerScriptParsed, handleScriptParsed)
   rpc.on(DevtoolsCommandType.DebuggerPaused, handlePaused)
   rpc.on(DevtoolsCommandType.DebuggerResumed, handleResumed)
+
+  const debuggerId = await DevtoolsProtocolDebugger.enable(rpc)
+  state.debuggerId = debuggerId
 }
 
 export const listProcesses = async () => {
