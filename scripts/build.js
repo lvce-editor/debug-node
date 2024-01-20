@@ -1,15 +1,17 @@
+import { packageExtension } from '@lvce-editor/package-extension'
 import { execSync } from 'child_process'
-import fs, { readFileSync } from 'fs'
+import fs, { cpSync, readFileSync } from 'fs'
 import path, { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
-import { packageExtension } from '@lvce-editor/package-extension'
 
 const NOT_NEEDED = []
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-
 const root = path.join(__dirname, '..')
 const extension = path.join(root, 'packages', 'extension')
+const node = path.join(root, 'packages', 'node')
+const dist = join(root, 'dist')
+const debugWorker = path.join(root, 'packages', 'debug-worker')
 
 fs.rmSync(join(root, 'dist'), { recursive: true, force: true })
 
@@ -43,28 +45,42 @@ const getAllDependencies = (obj) => {
   return [obj, ...Object.values(obj.dependencies).flatMap(getAllDependencies)]
 }
 
-const getDependencies = () => {
+const getDependencies = (cwd) => {
   const stdout = execSync('npm list --omit=dev --parseable --all', {
-    cwd: extension,
+    cwd,
   }).toString()
   const lines = stdout.split('\n')
   return lines.slice(1, -1)
 }
 
-const dependencies = getDependencies()
-for (const dependency of dependencies) {
-  fs.cpSync(
-    dependency,
-    join(root, 'dist', dependency.slice(extension.length)),
-    {
+const copyDependencies = (from, to) => {
+  const dependencies = getDependencies(from)
+  for (const dependency of dependencies) {
+    fs.cpSync(dependency, join(dist, to, dependency.slice(from.length)), {
       recursive: true,
-    },
-  )
+    })
+  }
 }
 
+copyDependencies(extension, '')
+
+copyDependencies(node, 'node')
+
 for (const notNeeded of NOT_NEEDED) {
-  fs.rmSync(join(root, 'dist', notNeeded), { force: true, recursive: true })
+  fs.rmSync(join(dist, 'node', notNeeded), { force: true, recursive: true })
 }
+
+cpSync(join(root, 'packages', 'node', 'src'), join(dist, 'node', 'src'), {
+  recursive: true,
+})
+cpSync(
+  join(root, 'packages', 'node', 'package.json'),
+  join(dist, 'node', 'package.json'),
+)
+
+fs.cpSync(join(debugWorker, 'src'), join(root, 'dist', 'debug-worker', 'src'), {
+  recursive: true,
+})
 
 await packageExtension({
   highestCompression: true,
