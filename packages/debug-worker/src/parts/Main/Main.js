@@ -2,13 +2,14 @@ import * as DebugStart from '../DebugStart/DebugStart.js'
 import * as DebugProvider from '../DebugProvider/DebugProvider.js'
 
 export const commandMap = {
-  'Debug.start': DebugStart.debugStart,
-  'Debug.resume': DebugProvider.resume,
+  'Debug.evaluate': DebugProvider.evaluate,
+  'Debug.getProperties': DebugProvider.getProperties,
   'Debug.pause': DebugProvider.pause,
+  'Debug.resume': DebugProvider.resume,
   'Debug.setPauseOnExceptions': DebugProvider.setPauseOnExceptions,
-  'Debug.stepOver': DebugProvider.stepOver,
+  'Debug.start': DebugStart.debugStart,
+  'Debug.step': DebugProvider.step,
   'Debug.stepInto': DebugProvider.stepInto,
   'Debug.stepOut': DebugProvider.stepOut,
-  'Debug.step': DebugProvider.step,
-  'Debug.evaluate': DebugProvider.evaluate,
+  'Debug.stepOver': DebugProvider.stepOver,
 }
