@@ -81,7 +81,6 @@ export const start = async (emitter) => {
     const params = message.params
     const { scriptId, url, scriptLanguage } = params
     parsedScripts[scriptId] = { url, scriptLanguage }
-    console.log({ scriptId, url, scriptLanguage })
     emitter.handleScriptParsed({ scriptId, url, scriptLanguage })
   }
   const handlePaused = (message) => {
