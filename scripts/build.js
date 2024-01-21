@@ -1,6 +1,6 @@
 import { packageExtension } from '@lvce-editor/package-extension'
 import { execSync } from 'child_process'
-import fs, { cpSync, readFileSync } from 'fs'
+import fs, { cpSync, readFileSync, writeFileSync } from 'fs'
 import path, { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -80,6 +80,33 @@ cpSync(
 
 fs.cpSync(join(debugWorker, 'src'), join(root, 'dist', 'debug-worker', 'src'), {
   recursive: true,
+})
+
+const replace = ({ path, occurrence, replacement }) => {
+  const oldContent = readFileSync(path, 'utf-8')
+  if (!oldContent.includes(occurrence)) {
+    throw new Error(`occurrence not found ${occurrence}`)
+  }
+  const newContent = oldContent.replace(occurrence, replacement)
+  writeFileSync(path, newContent)
+}
+
+replace({
+  path: join(
+    root,
+    'dist',
+    'src',
+    'parts',
+    'DebugWorkerUrl',
+    'DebugWorkerUrl.js',
+  ),
+  occurrence: '../debug-worker/',
+  replacement: 'debug-worker/',
+})
+replace({
+  path: join(root, 'dist', 'src', 'parts', 'DebugNodeUrl', 'DebugNodeUrl.js'),
+  occurrence: '../node/',
+  replacement: 'node/',
 })
 
 await packageExtension({
