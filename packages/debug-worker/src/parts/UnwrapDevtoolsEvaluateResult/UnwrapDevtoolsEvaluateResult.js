@@ -1,4 +1,7 @@
 export const unwrapResult = (result) => {
+  if (result.error && result.error.message) {
+    throw new Error(result.error.message)
+  }
   switch (
     result.result.result.type // yes, really
   ) {
