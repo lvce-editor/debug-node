@@ -1,12 +1,12 @@
+import * as DebugNodeUrl from '../DebugNodeUrl/DebugNodeUrl.js'
 import * as DebugWorker from '../DebugWorker/DebugWorker.js'
-import * as PathState from '../PathState/PathState.js'
 
 export const id = 'node-debug'
 
 let _emitter
 
 const getJson = async (...params) => {
-  const nodePath = PathState.state.path + '/../node/src/nodeMain.js'
+  const nodePath = DebugNodeUrl.getDebugNodeUrl()
   const nodeRpc = await vscode.createNodeRpc({
     path: nodePath,
     name: 'Debug Worker',
