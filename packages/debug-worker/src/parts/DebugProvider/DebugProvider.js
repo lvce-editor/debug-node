@@ -2,6 +2,7 @@ import * as DevtoolsCommandType from '../DevtoolsCommandType/DevtoolsCommandType
 import * as DevtoolsProtocolDebugger from '../DevtoolsProtocolDebugger/DevtoolsProtocolDebugger.js'
 import * as GetJson from '../GetJson/GetJson.js'
 import * as DevtoolsProtocolRuntime from '../DevtoolsProtocolRuntime/DevtoolsProtocolRuntime.js'
+import * as UnwrapDevtoolsEvaluateResult from '../UnwrapDevtoolsEvaluateResult/UnwrapDevtoolsEvaluateResult.js'
 import * as Ipc from '../Ipc/Ipc.js'
 
 export const id = 'node-debug'
@@ -155,6 +156,6 @@ export const evaluate = async (expression, callFrameId) => {
     expression,
     callFrameId,
   })
-  console.log({ result })
-  return result
+  const unwrapped = UnwrapDevtoolsEvaluateResult.unwrapResult(result)
+  return unwrapped
 }
