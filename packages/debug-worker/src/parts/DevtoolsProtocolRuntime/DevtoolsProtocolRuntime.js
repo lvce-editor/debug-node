@@ -8,17 +8,23 @@ import * as UnwrapDevtoolsEvaluateResult from '../UnwrapDevtoolsEvaluateResult/U
  * @returns
  */
 export const evaluate = async (rpc, options) => {
-  const rawResult = await rpc.invoke(DevtoolsCommandType.RuntimeEvaluate, options)
+  const rawResult = await rpc.invoke(
+    DevtoolsCommandType.RuntimeEvaluate,
+    options,
+  )
   if ('error' in rawResult) {
     throw new DevtoolsProtocolError(rawResult.error.message)
   }
   if ('exceptionDetails' in rawResult.result) {
-    throw new DevtoolsProtocolError(rawResult.result.exceptionDetails.exception.description)
+    throw new DevtoolsProtocolError(
+      rawResult.result.exceptionDetails.exception.description,
+    )
   }
   if (rawResult.result.result.subtype === 'error') {
     throw new DevtoolsProtocolError(rawResult.result.result.description)
   }
   const result = UnwrapDevtoolsEvaluateResult.unwrapResult(rawResult)
+  console.log({ rawResult, result })
   return result
 }
 /**
@@ -27,12 +33,17 @@ export const evaluate = async (rpc, options) => {
  * @returns
  */
 export const callFunctionOn = async (rpc, options) => {
-  const rawResult = await rpc.invoke(DevtoolsCommandType.RuntimeCallFunctionOn, options)
+  const rawResult = await rpc.invoke(
+    DevtoolsCommandType.RuntimeCallFunctionOn,
+    options,
+  )
   if ('error' in rawResult) {
     throw new DevtoolsProtocolError(rawResult.error.message)
   }
   if ('exceptionDetails' in rawResult.result) {
-    throw new DevtoolsProtocolError(rawResult.result.exceptionDetails.exception.description)
+    throw new DevtoolsProtocolError(
+      rawResult.result.exceptionDetails.exception.description,
+    )
   }
   if (rawResult.result.result.subtype === 'error') {
     throw new DevtoolsProtocolError(rawResult.result.result.description)
@@ -47,7 +58,10 @@ export const callFunctionOn = async (rpc, options) => {
  * @returns
  */
 export const getProperties = async (rpc, options) => {
-  const rawResult = await rpc.invoke(DevtoolsCommandType.RuntimeGetProperties, options)
+  const rawResult = await rpc.invoke(
+    DevtoolsCommandType.RuntimeGetProperties,
+    options,
+  )
   const result = UnwrapDevtoolsEvaluateResult.unwrapResult(rawResult)
   return result
 }
@@ -62,7 +76,9 @@ export const enable = async (rpc) => {
 }
 
 export const runIfWaitingForDebugger = async (rpc) => {
-  const rawResult = await rpc.invoke(DevtoolsCommandType.RuntimeRunIfWaitingForDebugger)
+  const rawResult = await rpc.invoke(
+    DevtoolsCommandType.RuntimeRunIfWaitingForDebugger,
+  )
   if ('error' in rawResult) {
     throw new DevtoolsProtocolError(rawResult.error.message)
   }

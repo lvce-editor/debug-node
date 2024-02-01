@@ -155,7 +155,8 @@ export const evaluate = async (expression, callFrameId) => {
   const result = await DevtoolsProtocolDebugger.evaluateOnCallFrame(rpc, {
     expression,
     callFrameId,
+    generatePreview: true,
   })
-  const unwrapped = UnwrapDevtoolsEvaluateResult.unwrapResult(result)
+  const unwrapped = UnwrapDevtoolsEvaluateResult.unwrapResultLoose(result)
   return unwrapped
 }

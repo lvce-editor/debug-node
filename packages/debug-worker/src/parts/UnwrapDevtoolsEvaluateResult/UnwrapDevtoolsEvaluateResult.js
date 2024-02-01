@@ -21,3 +21,21 @@ export const unwrapResult = (result) => {
       return result
   }
 }
+
+export const unwrapResultLoose = (result) => {
+  if (result.error && result.error.message) {
+    throw new Error(result.error.message)
+  }
+  switch (
+    result.result.result.type // yes, really
+  ) {
+    case 'number':
+    case 'string':
+    case 'boolean':
+    case 'object':
+    case 'function':
+      return result.result.result
+    default:
+      return result
+  }
+}
