@@ -15,11 +15,11 @@
   "type": "module",
   "devDependencies": {
     "@lvce-editor/package-extension": "^0.1.0",
-    "@lvce-editor/server": "^0.24.1",
-    "@types/node": "^20.11.20",
+    "@lvce-editor/server": "^0.24.3",
+    "@types/node": "^20.11.28",
     "lerna": "^8.1.2",
     "prettier": "^3.2.5",
-    "typescript": "^5.3.3",
+    "typescript": "^5.4.2",
     "@lerna/legacy-package-management": "^8.1.2"
   },
   "prettier": {
