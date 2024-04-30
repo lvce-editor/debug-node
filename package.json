@@ -14,12 +14,12 @@
   "author": "",
   "type": "module",
   "devDependencies": {
-    "@lvce-editor/package-extension": "^0.1.0",
-    "@lvce-editor/server": "^0.24.3",
-    "@types/node": "^20.11.28",
+    "@lvce-editor/package-extension": "^1.0.0",
+    "@lvce-editor/server": "0.24.3",
+    "@types/node": "^20.12.7",
     "lerna": "^8.1.2",
     "prettier": "^3.2.5",
-    "typescript": "^5.4.2",
+    "typescript": "^5.4.5",
     "@lerna/legacy-package-management": "^8.1.2"
   },
   "prettier": {
