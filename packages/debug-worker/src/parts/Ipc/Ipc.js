@@ -27,6 +27,7 @@ export const create = async (wsUrl) => {
     set onmessage(listener) {
       const handleMessage = (event) => {
         const parsed = JSON.parse(event.data)
+        // @ts-ignore
         listener(parsed)
       }
       webSocket.onmessage = handleMessage

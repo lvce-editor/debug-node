@@ -7,6 +7,7 @@ let _emitter
 
 const getJson = async (...params) => {
   const nodePath = DebugNodeUrl.getDebugNodeUrl()
+  // @ts-ignore
   const nodeRpc = await vscode.createNodeRpc({
     path: nodePath,
     name: 'Debug Worker',
