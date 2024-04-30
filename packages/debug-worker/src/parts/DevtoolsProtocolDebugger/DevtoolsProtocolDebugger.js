@@ -46,6 +46,7 @@ export const stepOut = async (rpc) => {
 }
 
 export const step = async (rpc) => {
+  // @ts-ignore
   const rawResult = await rpc.invoke(DevtoolsCommandType.DebuggerStep)
   if ('error' in rawResult) {
     throw new DevtoolsProtocolError(rawResult.error.message)
@@ -55,7 +56,7 @@ export const step = async (rpc) => {
 export const setPauseOnExceptions = async (rpc, options) => {
   const rawResult = await rpc.invoke(
     DevtoolsCommandType.DebuggerSetPauseOnExceptions,
-    options
+    options,
   )
   if ('error' in rawResult) {
     throw new DevtoolsProtocolError(rawResult.error.message)
@@ -70,14 +71,14 @@ export const setPauseOnExceptions = async (rpc, options) => {
 export const evaluateOnCallFrame = async (rpc, params) => {
   const rawResult = await rpc.invoke(
     DevtoolsCommandType.DebuggerEvaluateOnCallFrame,
-    params
+    params,
   )
   if ('error' in rawResult) {
     throw new DevtoolsProtocolError(rawResult.error.message)
   }
   if ('exceptionDetails' in rawResult.result) {
     throw new DevtoolsProtocolError(
-      rawResult.result.exceptionDetails.exception.description
+      rawResult.result.exceptionDetails.exception.description,
     )
   }
   return rawResult

@@ -3,9 +3,9 @@
     "target": "esnext",
     "lib": ["esnext"],
     "checkJs": true,
-    "module": "esnext",
+    "module": "NodeNext",
     "types": [],
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "rootDir": ".",
     "allowJs": true,
     "skipLibCheck": true,
@@ -16,5 +16,5 @@
     "strict": true,
     "noImplicitAny": false
   },
-  "include": ["src", "test", "typings"]
+  "include": ["src", "test", "typings/types.d.ts"]
 }

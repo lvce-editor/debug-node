@@ -74,6 +74,7 @@ export const start = async (emitter) => {
   const ipc = await Ipc.create(webSocketDebuggerUrl)
   console.log('created ipc')
   const rpc = createRpc(ipc)
+  // @ts-ignore
   state.rpc = rpc
 
   const parsedScripts = Object.create(null)
@@ -109,6 +110,7 @@ export const getProperties = async (objectId) => {
   return DevtoolsProtocolRuntime.getProperties(rpc, {
     objectId,
     ownProperties: false,
+    // @ts-ignore
     accessorPropertiesOnly: false,
     nonIndexedPropertiesOnly: false,
     generatePreview: true,
@@ -132,21 +134,25 @@ export const setPauseOnExceptions = async (value) => {
 
 export const stepOver = async (value) => {
   const { rpc } = state
+  // @ts-ignore
   await DevtoolsProtocolDebugger.stepOver(rpc, value)
 }
 
 export const stepInto = async (value) => {
   const { rpc } = state
+  // @ts-ignore
   await DevtoolsProtocolDebugger.stepInto(rpc, value)
 }
 
 export const stepOut = async (value) => {
   const { rpc } = state
+  // @ts-ignore
   await DevtoolsProtocolDebugger.stepOut(rpc, value)
 }
 
 export const step = async (value) => {
   const { rpc } = state
+  // @ts-ignore
   await DevtoolsProtocolDebugger.step(rpc, value)
 }
 
