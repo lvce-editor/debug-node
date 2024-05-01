@@ -1,6 +1,7 @@
 import * as DevtoolsCommandType from '../DevtoolsCommandType/DevtoolsCommandType.js'
 import * as DevtoolsProtocolDebugger from '../DevtoolsProtocolDebugger/DevtoolsProtocolDebugger.js'
 import * as GetJson from '../GetJson/GetJson.js'
+import * as PauseOnExceptionState from '../PauseOnExceptionState/PauseOnExceptionState.js'
 import * as DevtoolsProtocolRuntime from '../DevtoolsProtocolRuntime/DevtoolsProtocolRuntime.js'
 import * as UnwrapDevtoolsEvaluateResult from '../UnwrapDevtoolsEvaluateResult/UnwrapDevtoolsEvaluateResult.js'
 import * as Ipc from '../Ipc/Ipc.js'
@@ -127,9 +128,26 @@ export const pause = async () => {
   await DevtoolsProtocolDebugger.pause(rpc)
 }
 
+const transformPauseOnExceptionValue = (value) => {
+  switch (value) {
+    case 0:
+      return PauseOnExceptionState.None
+    case 1:
+      return PauseOnExceptionState.All
+    case 2:
+      return PauseOnExceptionState.Uncaught
+    default:
+      return PauseOnExceptionState.None
+  }
+}
+
 export const setPauseOnExceptions = async (value) => {
   const { rpc } = state
-  await DevtoolsProtocolDebugger.setPauseOnExceptions(rpc, value)
+  const actualValue = transformPauseOnExceptionValue(value)
+  console.log({ actualValue })
+  await DevtoolsProtocolDebugger.setPauseOnExceptions(rpc, {
+    state: actualValue,
+  })
 }
 
 export const stepOver = async (value) => {
