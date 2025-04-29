@@ -1,6 +1,6 @@
 export const getDebugWorkerUrl = () => {
   return new URL(
-    '../../../../debug-worker/src/debugWorkerMain.js',
+    '../../../../debug-worker/src/javascriptDebugWorkerMain.js',
     import.meta.url,
   ).toString()
 }
