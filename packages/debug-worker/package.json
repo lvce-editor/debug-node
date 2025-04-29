@@ -1,7 +1,7 @@
 {
-  "name": "debug-worker",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "javascript-debug-worker",
+  "version": "0.0.0",
+  "main": "src/javascriptDebugWorkerMain.js",
   "scripts": {
     "test": "node --unhandled-rejections=warn --experimental-vm-modules ./node_modules/jest/bin/jest.js --detectOpenHandles --forceExit",
     "test:watch": "node --unhandled-rejections=warn --experimental-vm-modules ./node_modules/jest/bin/jest.js --watch"
@@ -9,7 +9,7 @@
   "keywords": [],
   "author": "",
   "type": "module",
-  "license": "ISC",
+  "license": "MIT",
   "description": "",
   "devDependencies": {
     "@types/jest": "^29.5.11",
