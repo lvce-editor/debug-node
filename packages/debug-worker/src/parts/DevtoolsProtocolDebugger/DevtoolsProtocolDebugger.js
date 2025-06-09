@@ -10,6 +10,16 @@ export const disable = async (rpc) => {
   const rawResult = await rpc.invoke(DevtoolsCommandType.DebuggerDisable)
 }
 
+export const getScriptSource = async (rpc) => {
+  const rawResult = await rpc.invoke(
+    DevtoolsCommandType.DebuggerGetScriptSource,
+  )
+  if ('error' in rawResult) {
+    throw new DevtoolsProtocolError(rawResult.error.message)
+  }
+  return rawResult
+}
+
 export const pause = async (rpc) => {
   const rawResult = await rpc.invoke(DevtoolsCommandType.DebuggerPause)
   if ('error' in rawResult) {
