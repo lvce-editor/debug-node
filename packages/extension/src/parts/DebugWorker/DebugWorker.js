@@ -1,32 +1,15 @@
-import * as DebugWorkerUrl from '../DebugWorkerUrl/DebugWorkerUrl.js'
+import * as Execute from '../Execute/Execute.js'
 
-export const state = {
-  /**
-   * @type {any}
-   */
-  rpcPromise: undefined,
-}
+// @ts-ignore
+const rpc = vscode.createRpc({
+  id: 'builtin.debug-node.debug-worker',
+  execute: Execute.execute,
+})
 
-const createRpc = async (execute) => {
-  const workerUrl = DebugWorkerUrl.getDebugWorkerUrl()
-  // @ts-ignore
-  const rpc = await vscode.createRpc({
-    type: 'worker',
-    url: workerUrl,
-    name: 'Debug Worker',
-    execute,
-  })
+export const getInstance = async () => {
   return rpc
 }
 
-const getOrCreateRpc = async (execute) => {
-  if (!state.rpcPromise) {
-    state.rpcPromise = createRpc(execute)
-  }
-  return state.rpcPromise
-}
-
-export const getInstance = async (execute) => {
-  const rpc = await getOrCreateRpc(execute)
-  return rpc
+export const invoke = (method, ...params) => {
+  return rpc.invoke(method, ...params)
 }
