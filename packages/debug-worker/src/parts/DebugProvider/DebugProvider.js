@@ -177,7 +177,11 @@ export const step = async (value) => {
 export const getScriptSource = async (scriptId) => {
   const { rpc } = state
   // @ts-ignore
-  await DevtoolsProtocolDebugger.getScriptSource(rpc, { scriptId })
+  const result = await DevtoolsProtocolDebugger.getScriptSource(rpc, {
+    scriptId,
+  })
+  const unwrapped = result.result.scriptSource
+  return unwrapped
 }
 
 export const evaluate = async (expression, callFrameId) => {
