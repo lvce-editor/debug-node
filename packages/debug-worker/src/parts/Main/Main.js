@@ -4,6 +4,7 @@ import * as DebugProvider from '../DebugProvider/DebugProvider.js'
 export const commandMap = {
   'Debug.evaluate': DebugProvider.evaluate,
   'Debug.getProperties': DebugProvider.getProperties,
+  'Debug.getScriptSource': DebugProvider.getScriptSource,
   'Debug.pause': DebugProvider.pause,
   'Debug.resume': DebugProvider.resume,
   'Debug.setPauseOnExceptions': DebugProvider.setPauseOnExceptions,
