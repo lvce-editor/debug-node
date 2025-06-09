@@ -32,7 +32,6 @@ const execute = async (method, ...params) => {
 
 export const start = async (emitter) => {
   _emitter = emitter
-  console.log('start debug')
   const rpc = await DebugWorker.getInstance(execute)
   await rpc.invoke('Debug.start')
 }
@@ -84,4 +83,9 @@ export const step = async (value) => {
 export const evaluate = async (expression, callFrameId) => {
   const rpc = await DebugWorker.getInstance(execute)
   return rpc.invoke('Debug.evaluate', expression, callFrameId)
+}
+
+export const getScriptSource = async (scriptId) => {
+  const rpc = await DebugWorker.getInstance(execute)
+  return rpc.invoke('Debug.getScriptSource', scriptId)
 }

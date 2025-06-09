@@ -8,6 +8,8 @@ export const CssDisable = 'Css.disable'
 
 export const RuntimeEvaluate = 'Runtime.evaluate'
 
+export const DebuggerGetScriptSource = 'Debugger.getScriptSource'
+
 export const RuntimeGetProperties = 'Runtime.getProperties'
 
 export const RuntimeEnable = 'Runtime.enable'

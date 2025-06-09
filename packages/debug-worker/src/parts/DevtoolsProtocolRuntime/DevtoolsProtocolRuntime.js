@@ -24,9 +24,9 @@ export const evaluate = async (rpc, options) => {
     throw new DevtoolsProtocolError(rawResult.result.result.description)
   }
   const result = UnwrapDevtoolsEvaluateResult.unwrapResult(rawResult)
-  console.log({ rawResult, result })
   return result
 }
+
 /**
  *
  * @param {{functionDeclaration:string, objectId?:string, arguments?:any[], uniqueContextId?:string, executionContextId?:number, awaitPromise?:boolean, returnByValue?:boolean}} options
