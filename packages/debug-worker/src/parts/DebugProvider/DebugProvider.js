@@ -109,13 +109,28 @@ export const start = async (emitter) => {
     const { scriptId, url, scriptLanguage } = params
     parsedScripts[scriptId] = { url, scriptLanguage }
     emitter.handleScriptParsed({ scriptId, url, scriptLanguage })
+    try {
+      emitter.handleChange({
+        type: 'script-parsed',
+      })
+    } catch {}
   }
   const handlePaused = (message) => {
-    console.log('debugger is paused')
     emitter.handlePaused(message.params)
+
+    try {
+      emitter.handleChange({
+        type: 'paused',
+      })
+    } catch {}
   }
   const handleResumed = (message) => {
     emitter.handleResumed()
+    try {
+      emitter.handleChange({
+        type: 'resumed',
+      })
+    } catch {}
   }
   rpc.on(DevtoolsCommandType.DebuggerScriptParsed, handleScriptParsed)
   rpc.on(DevtoolsCommandType.DebuggerPaused, handlePaused)
