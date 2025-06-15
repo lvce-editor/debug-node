@@ -1,7 +1,6 @@
 import * as DebugProvider from '../DebugProvider/DebugProvider.js'
 
 export const debugStart = async () => {
-  console.log('debug start')
   const emitter = {
     handleScriptParsed(args) {
       // @ts-ignore
@@ -14,6 +13,10 @@ export const debugStart = async () => {
     handleResumed() {
       // @ts-ignore
       rpc.invoke('Debug.handleResumed')
+    },
+    handleChange() {
+      // @ts-ignore
+      rpc.invoke('Debug.handleChange')
     },
   }
   await DebugProvider.start(emitter)
