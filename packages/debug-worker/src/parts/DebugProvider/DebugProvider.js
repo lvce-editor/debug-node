@@ -101,6 +101,8 @@ const getWebSocketDebuggerUrl = async () => {
   return { json, webSocketDebuggerUrl }
 }
 
+let oldEmitterEnabled = false // old push based emitter
+
 export const start = async (emitter) => {
   // try {
   //   const jsonList = await getJsonList()
@@ -124,7 +126,9 @@ export const start = async (emitter) => {
     const params = message.params
     const { scriptId, url, scriptLanguage } = params
     parsedScripts[scriptId] = { url, scriptLanguage }
-    emitter.handleScriptParsed({ scriptId, url, scriptLanguage })
+    if (oldEmitterEnabled) {
+      emitter.handleScriptParsed({ scriptId, url, scriptLanguage })
+    }
     state.scripts = [
       ...state.scripts,
       {
@@ -140,7 +144,9 @@ export const start = async (emitter) => {
     } catch {}
   }
   const handlePaused = (message) => {
-    emitter.handlePaused(message.params)
+    if (oldEmitterEnabled) {
+      emitter.handlePaused(message.params)
+    }
     state.pausedParams = message.params
     state.status = 'paused'
 
@@ -151,7 +157,9 @@ export const start = async (emitter) => {
     } catch {}
   }
   const handleResumed = (message) => {
-    emitter.handleResumed()
+    if (oldEmitterEnabled) {
+      emitter.handleResumed()
+    }
     state.status = 'resumed'
     try {
       emitter.handleChange({
