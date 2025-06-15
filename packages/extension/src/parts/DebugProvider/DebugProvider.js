@@ -62,3 +62,18 @@ export const getScriptSource = async (scriptId) => {
   const rpc = await DebugWorker.getInstance()
   return rpc.invoke('Debug.getScriptSource', scriptId)
 }
+
+export const getStatus = async () => {
+  const rpc = await DebugWorker.getInstance()
+  return rpc.invoke('Debug.getStatus')
+}
+
+export const getCallStack = async () => {
+  const rpc = await DebugWorker.getInstance()
+  return rpc.invoke('Debug.getCallStack')
+}
+
+export const getCodeFrame = async () => {
+  const rpc = await DebugWorker.getInstance()
+  return rpc.invoke('Debug.getCodeFrame')
+}
