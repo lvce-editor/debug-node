@@ -16,4 +16,5 @@ export const commandMap = {
   'Debug.getStatus': DebugProvider.getStatus,
   'Debug.getCallStack': DebugProvider.getCallStack,
   'Debug.getScopeChain': DebugProvider.getScopeChain,
+  'Debug.getScripts': DebugProvider.getScripts,
 }

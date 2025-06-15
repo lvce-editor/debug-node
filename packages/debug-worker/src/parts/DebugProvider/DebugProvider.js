@@ -53,6 +53,7 @@ const state = {
   status: undefined,
   callStack: undefined,
   scopeChain: undefined,
+  scripts: undefined,
 }
 
 export const getStatus = () => {
@@ -68,6 +69,11 @@ export const getCallStack = () => {
 export const getScopeChain = () => {
   const { scopeChain } = state
   return scopeChain
+}
+
+export const getScripts = () => {
+  const { scripts } = state
+  return scripts
 }
 
 const getWebSocketDebuggerUrl = async () => {
