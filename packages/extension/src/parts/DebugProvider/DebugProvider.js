@@ -77,3 +77,8 @@ export const getCodeFrame = async () => {
   const rpc = await DebugWorker.getInstance()
   return rpc.invoke('Debug.getCodeFrame')
 }
+
+export const getScripts = async () => {
+  const rpc = await DebugWorker.getInstance()
+  return rpc.invoke('Debug.getScripts')
+}
