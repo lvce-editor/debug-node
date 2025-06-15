@@ -50,10 +50,23 @@ const state = {
   devtoolsProtocol: undefined,
   debuggerId: '',
   rpc: undefined,
-  status: undefined,
-  callStack: undefined,
-  scopeChain: undefined,
-  scripts: undefined,
+  status: '',
+  /**
+   * @type {any[]}
+   */
+  callStack: [],
+  /**
+   * @type {any[]}
+   */
+  scopeChain: [],
+  /**
+   * @type {any[]}
+   */
+  scripts: [],
+  /**
+   * @type {any }
+   */
+  pausedParams: undefined,
 }
 
 export const getStatus = () => {
@@ -62,13 +75,14 @@ export const getStatus = () => {
 }
 
 export const getCallStack = () => {
-  const { callStack } = state
-  return callStack
+  const { pausedParams } = state
+  return pausedParams.callFrames
 }
 
 export const getScopeChain = () => {
-  const { scopeChain } = state
-  return scopeChain
+  // const { scopeChain } = state
+  // TODO get this from paused params
+  return []
 }
 
 export const getScripts = () => {
@@ -97,7 +111,6 @@ export const start = async (emitter) => {
   // }
   const { webSocketDebuggerUrl } = await getWebSocketDebuggerUrl()
   const ipc = await Ipc.create(webSocketDebuggerUrl)
-  console.log('created ipc')
   const rpc = createRpc(ipc)
   // @ts-ignore
   state.rpc = rpc
@@ -109,6 +122,14 @@ export const start = async (emitter) => {
     const { scriptId, url, scriptLanguage } = params
     parsedScripts[scriptId] = { url, scriptLanguage }
     emitter.handleScriptParsed({ scriptId, url, scriptLanguage })
+    state.scripts = [
+      ...state.scripts,
+      {
+        scriptId,
+        url,
+        scriptLanguage,
+      },
+    ]
     try {
       emitter.handleChange({
         type: 'script-parsed',
@@ -117,6 +138,8 @@ export const start = async (emitter) => {
   }
   const handlePaused = (message) => {
     emitter.handlePaused(message.params)
+    state.pausedParams = message.params
+    state.status = 'paused'
 
     try {
       emitter.handleChange({
@@ -126,6 +149,7 @@ export const start = async (emitter) => {
   }
   const handleResumed = (message) => {
     emitter.handleResumed()
+    state.status = 'resumed'
     try {
       emitter.handleChange({
         type: 'resumed',
