@@ -13,4 +13,7 @@ export const commandMap = {
   'Debug.stepInto': DebugProvider.stepInto,
   'Debug.stepOut': DebugProvider.stepOut,
   'Debug.stepOver': DebugProvider.stepOver,
+  'Debug.getStatus': DebugProvider.getStatus,
+  'Debug.getCallStack': DebugProvider.getCallStack,
+  'Debug.getScopeChain': DebugProvider.getScopeChain,
 }
