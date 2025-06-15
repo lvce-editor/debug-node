@@ -70,8 +70,11 @@ const state = {
 }
 
 export const getStatus = () => {
-  const { status } = state
-  return status
+  const { status, pausedParams } = state
+  return {
+    status,
+    reason: pausedParams?.reason,
+  }
 }
 
 export const getCallStack = () => {
