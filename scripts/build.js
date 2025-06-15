@@ -108,6 +108,11 @@ replace({
   occurrence: '../node/',
   replacement: 'node/',
 })
+replace({
+  path: join(root, 'dist', 'extension.json'),
+  occurrence: '../debug-worker/',
+  replacement: 'debug-worker/',
+})
 
 await packageExtension({
   highestCompression: true,
