@@ -50,6 +50,24 @@ const state = {
   devtoolsProtocol: undefined,
   debuggerId: '',
   rpc: undefined,
+  status: undefined,
+  callStack: undefined,
+  scopeChain: undefined,
+}
+
+export const getStatus = () => {
+  const { status } = state
+  return status
+}
+
+export const getCallStack = () => {
+  const { callStack } = state
+  return callStack
+}
+
+export const getScopeChain = () => {
+  const { scopeChain } = state
+  return scopeChain
 }
 
 const getWebSocketDebuggerUrl = async () => {
