@@ -137,11 +137,6 @@ export const start = async (emitter) => {
         scriptLanguage,
       },
     ]
-    try {
-      emitter.handleChange({
-        type: 'script-parsed',
-      })
-    } catch {}
   }
   const handlePaused = (message) => {
     if (oldEmitterEnabled) {
