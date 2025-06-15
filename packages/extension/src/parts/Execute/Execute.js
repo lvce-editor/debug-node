@@ -11,6 +11,8 @@ export const execute = async (method, ...params) => {
     emitter.handleScriptParsed(...params)
   } else if (method === 'Debug.handleResumed') {
     emitter.handleResumed(...params)
+  } else if (method === 'Debug.handleChange') {
+    emitter.handleChange(...params)
   } else {
     console.log({ method })
   }
