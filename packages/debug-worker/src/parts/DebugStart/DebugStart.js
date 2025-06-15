@@ -14,9 +14,9 @@ export const debugStart = async () => {
       // @ts-ignore
       rpc.invoke('Debug.handleResumed')
     },
-    handleChange() {
+    handleChange(params) {
       // @ts-ignore
-      rpc.invoke('Debug.handleChange')
+      rpc.invoke('Debug.handleChange', params)
     },
   }
   await DebugProvider.start(emitter)
