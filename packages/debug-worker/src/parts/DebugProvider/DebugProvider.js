@@ -117,6 +117,8 @@ export const start = async (emitter) => {
   if (!isAvailable) {
     return
   }
+  state.status = 'available'
+
   const ipc = await Ipc.create(webSocketDebuggerUrl)
   const rpc = createRpc(ipc)
   // @ts-ignore
