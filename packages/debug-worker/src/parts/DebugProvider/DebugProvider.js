@@ -1,10 +1,10 @@
 import * as DevtoolsCommandType from '../DevtoolsCommandType/DevtoolsCommandType.js'
 import * as DevtoolsProtocolDebugger from '../DevtoolsProtocolDebugger/DevtoolsProtocolDebugger.js'
-import * as GetJson from '../GetJson/GetJson.js'
-import * as PauseOnExceptionState from '../PauseOnExceptionState/PauseOnExceptionState.js'
 import * as DevtoolsProtocolRuntime from '../DevtoolsProtocolRuntime/DevtoolsProtocolRuntime.js'
-import * as UnwrapDevtoolsEvaluateResult from '../UnwrapDevtoolsEvaluateResult/UnwrapDevtoolsEvaluateResult.js'
+import { getWebSocketDebuggerUrl } from '../GetWebSocketDebuggerUrl/GetWebSocketDebuggerUrl.js'
 import * as Ipc from '../Ipc/Ipc.js'
+import * as PauseOnExceptionState from '../PauseOnExceptionState/PauseOnExceptionState.js'
+import * as UnwrapDevtoolsEvaluateResult from '../UnwrapDevtoolsEvaluateResult/UnwrapDevtoolsEvaluateResult.js'
 
 export const id = 'node-debug'
 
@@ -50,7 +50,7 @@ const state = {
   devtoolsProtocol: undefined,
   debuggerId: '',
   rpc: undefined,
-  status: '',
+  status: 'unavailable',
   /**
    * @type {any[]}
    */
@@ -67,10 +67,15 @@ const state = {
    * @type {any }
    */
   pausedParams: undefined,
+
+  /**
+   * @type {boolean}
+   */
+  isAvailable: false,
 }
 
 export const getStatus = () => {
-  const { status, pausedParams } = state
+  const { status, pausedParams, isAvailable } = state
   return {
     status,
     reason: pausedParams?.reason,
@@ -94,13 +99,6 @@ export const getScripts = () => {
   return scripts
 }
 
-const getWebSocketDebuggerUrl = async () => {
-  const json = await GetJson.getJson('http://localhost:9229/json/list')
-  const process = json[0]
-  const { webSocketDebuggerUrl } = process
-  return { json, webSocketDebuggerUrl }
-}
-
 let oldEmitterEnabled = false // old push based emitter
 
 export const start = async (emitter) => {
@@ -114,7 +112,11 @@ export const start = async (emitter) => {
   //   }
   //   return
   // }
-  const { webSocketDebuggerUrl } = await getWebSocketDebuggerUrl()
+  const { webSocketDebuggerUrl, isAvailable } = await getWebSocketDebuggerUrl()
+  state.isAvailable = isAvailable
+  if (!isAvailable) {
+    return
+  }
   const ipc = await Ipc.create(webSocketDebuggerUrl)
   const rpc = createRpc(ipc)
   // @ts-ignore
@@ -213,7 +215,6 @@ const transformPauseOnExceptionValue = (value) => {
 export const setPauseOnExceptions = async (value) => {
   const { rpc } = state
   const actualValue = transformPauseOnExceptionValue(value)
-  console.log({ actualValue })
   await DevtoolsProtocolDebugger.setPauseOnExceptions(rpc, {
     state: actualValue,
   })
