@@ -30,6 +30,7 @@ fs.writeFileSync(
   JSON.stringify(packageJson, null, 2) + '\n',
 )
 fs.copyFileSync(join(root, 'README.md'), join(root, 'dist', 'README.md'))
+fs.copyFileSync(join(root, 'demo.png'), join(root, 'dist', 'demo.png'))
 fs.copyFileSync(
   join(extension, 'extension.json'),
   join(root, 'dist', 'extension.json'),
