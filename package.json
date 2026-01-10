@@ -3,15 +3,15 @@
   "version": "0.0.0-dev",
   "description": "",
   "scripts": {
-    "postinstall": "lerna bootstrap --ci",
-    "test": "lerna run test",
+    "build": "node scripts/build.js",
     "dev": "node ./node_modules/@lvce-editor/server/bin/server.js --only-extension=packages/extension --test-path=packages/e2e",
-    "test:watch": "node --unhandled-rejections=warn --experimental-vm-modules ./node_modules/jest/bin/jest.js --watch",
     "e2e": "cd packages/e2e && npm run e2e",
     "e2e:headless": "cd packages/e2e && npm run e2e:headless",
-    "type-check": "tsc -b",
-    "build": "node scripts/build.js",
-    "lint": "eslint . && prettier --check ."
+    "postinstall": "lerna bootstrap --ci",
+    "lint": "eslint . && prettier --check .",
+    "test": "lerna run test",
+    "test:watch": "node --unhandled-rejections=warn --experimental-vm-modules ./node_modules/jest/bin/jest.js --watch",
+    "type-check": "tsc -b"
   },
   "keywords": [],
   "author": "",
