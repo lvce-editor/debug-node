@@ -2,7 +2,9 @@
   "id": "builtin.debug-node",
   "name": "Debug Node",
   "description": "Debugger for NodeJS",
-  "activation": ["onDebug:node-debug"],
+  "activation": [
+    "onDebug:node-debug"
+  ],
   "browser": "src/debugNodeMain.js",
   "commands": [],
   "languages": [],
@@ -12,7 +14,11 @@
       "type": "web-worker",
       "name": "Debug Node Worker",
       "url": "../debug-worker/src/javascriptDebugWorkerMain.js",
-      "contentSecurityPolicy": ["default-src 'none'", "script-src 'self'"]
+      "contentSecurityPolicy": [
+        "default-src 'none'",
+        "script-src 'self'"
+      ]
     }
-  ]
+  ],
+  "repository": "https://github.com/lvce-editor/debug-node"
 }
