@@ -6,7 +6,10 @@ import { DevtoolsProtocolError } from '../DevtoolsProtocolError/DevtoolsProtocol
  * @param {{autoAttach:boolean, waitForDebuggerOnStart:boolean, flatten?:boolean}} options
  */
 export const setAutoAttach = async (rpc, options) => {
-  const rawResult = await rpc.invoke(DevtoolsCommandType.TargetSetAutoAttach, options)
+  const rawResult = await rpc.invoke(
+    DevtoolsCommandType.TargetSetAutoAttach,
+    options,
+  )
   if ('error' in rawResult) {
     throw new DevtoolsProtocolError(rawResult.error.message)
   }
@@ -16,7 +19,9 @@ export const setAutoAttach = async (rpc, options) => {
  *
  */
 export const attachToBrowserTarget = async (rpc) => {
-  const rawResult = await rpc.invoke(DevtoolsCommandType.TargetAttachToBrowserTarget)
+  const rawResult = await rpc.invoke(
+    DevtoolsCommandType.TargetAttachToBrowserTarget,
+  )
   if ('error' in rawResult) {
     throw new DevtoolsProtocolError(rawResult.error.message)
   }
@@ -27,7 +32,10 @@ export const attachToBrowserTarget = async (rpc) => {
  * @param {{discover:true}} options
  */
 export const setDiscoverTargets = async (rpc, options) => {
-  const rawResult = await rpc.invoke(DevtoolsCommandType.TargetSetDiscoverTargets, options)
+  const rawResult = await rpc.invoke(
+    DevtoolsCommandType.TargetSetDiscoverTargets,
+    options,
+  )
   if ('error' in rawResult) {
     throw new DevtoolsProtocolError(rawResult.error.message)
   }
@@ -47,7 +55,10 @@ export const getTargets = async (rpc) => {
  * @returns
  */
 export const attachToTarget = async (rpc, options) => {
-  const rawResult = await rpc.invoke(DevtoolsCommandType.TargetAttachToTarget, options)
+  const rawResult = await rpc.invoke(
+    DevtoolsCommandType.TargetAttachToTarget,
+    options,
+  )
   if ('error' in rawResult) {
     throw new DevtoolsProtocolError(rawResult.error.message)
   }

@@ -10,8 +10,10 @@ export const PageLoadEventFired = 'Page.loadEventFired'
 
 export const RuntimeConsoleApiCalled = 'Runtime.consoleAPICalled'
 export const RuntimeExecutionContextCreated = 'Runtime.executionContextCreated'
-export const RuntimeExecutionContextDestroyed = 'Runtime.executionContextDestroyed'
-export const RuntimeExecutionContextsCleared = 'Runtime.executionContextsCleared'
+export const RuntimeExecutionContextDestroyed =
+  'Runtime.executionContextDestroyed'
+export const RuntimeExecutionContextsCleared =
+  'Runtime.executionContextsCleared'
 
 export const TargetAttachedToTarget = 'Target.attachedToTarget'
 export const TargetDetachedFromTarget = 'Target.detachedFromTarget'

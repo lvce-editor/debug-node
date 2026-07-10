@@ -21,7 +21,7 @@ export const create = (rpc) => {
           DevtoolsCommandType.RuntimeEvaluate,
           {
             expression,
-          }
+          },
         )
         const result = unwrapResult(rawResult)
         return result
@@ -29,7 +29,7 @@ export const create = (rpc) => {
       async getProperties(options) {
         const rawResult = await rpc.invoke(
           DevtoolsCommandType.RuntimeGetProperties,
-          options
+          options,
         )
         const result = unwrapResult(rawResult)
         return result
@@ -79,7 +79,7 @@ export const create = (rpc) => {
           DevtoolsCommandType.DebuggerSetPauseOnExceptions,
           {
             state,
-          }
+          },
         )
         if ('error' in rawResult) {
           throw new DevtoolsProtocolError(rawResult.error.message)
@@ -88,7 +88,7 @@ export const create = (rpc) => {
       async evaluateOnCallFrame(params) {
         const rawResult = await rpc.invoke(
           DevtoolsCommandType.DebuggerEvaluateOnCallFrame,
-          params
+          params,
         )
         if ('error' in rawResult) {
           throw new DevtoolsProtocolError(rawResult.error.message)
@@ -103,7 +103,7 @@ export const create = (rpc) => {
       async startScreencast(options) {
         const rawResult = await rpc.invoke(
           DevtoolsCommandType.PageStartScreenCast,
-          options
+          options,
         )
         if ('error' in rawResult) {
           throw new DevtoolsProtocolError(rawResult.error.message)
@@ -112,7 +112,7 @@ export const create = (rpc) => {
       async stopScreencast(options) {
         const rawResult = await rpc.invoke(
           DevtoolsCommandType.PageStopScreenCast,
-          options
+          options,
         )
         if ('error' in rawResult) {
           throw new DevtoolsProtocolError(rawResult.error.message)

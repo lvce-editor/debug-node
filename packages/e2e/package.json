@@ -1,7 +1,7 @@
 {
   "name": "e2e",
   "version": "0.0.0-dev",
-  "description": "",
+  "description": "End-to-end tests for the Node.js debugger",
   "main": "index.js",
   "scripts": {
     "#e2e:headless": "node ./node_modules/@lvce-editor/test-with-playwright/bin/test-with-playwright.js  --only-extension=../extension --test-path=. --headless",
@@ -9,8 +9,10 @@
     "e2e:headless": "echo ok"
   },
   "type": "module",
-  "keywords": [],
-  "author": "",
+  "author": {
+    "name": "Le Vivilet",
+    "email": "levivilet@pm.me"
+  },
   "license": "MIT",
   "devDependencies": {
     "@lvce-editor/test-with-playwright": "^12.1.0"

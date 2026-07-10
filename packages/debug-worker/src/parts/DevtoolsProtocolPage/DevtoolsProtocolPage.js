@@ -6,14 +6,20 @@ export const setFontSizes = () => {
 }
 
 export const startScreencast = async (rpc, options) => {
-  const rawResult = await rpc.invoke(DevtoolsCommandType.PageStartScreenCast, options)
+  const rawResult = await rpc.invoke(
+    DevtoolsCommandType.PageStartScreenCast,
+    options,
+  )
   if ('error' in rawResult) {
     throw new DevtoolsProtocolError(rawResult.error.message)
   }
 }
 
 export const stopScreencast = async (rpc, options) => {
-  const rawResult = await rpc.invoke(DevtoolsCommandType.PageStopScreenCast, options)
+  const rawResult = await rpc.invoke(
+    DevtoolsCommandType.PageStopScreenCast,
+    options,
+  )
   if ('error' in rawResult) {
     throw new DevtoolsProtocolError(rawResult.error.message)
   }
@@ -31,7 +37,10 @@ export const enable = async (rpc, options) => {
  * @param {{source:string, worldName?:string}} options
  */
 export const addScriptToEvaluateOnNewDocument = async (rpc, options) => {
-  const rawResult = await rpc.invoke(DevtoolsCommandType.PageAddScriptToEvaluateOnNewDocument, options)
+  const rawResult = await rpc.invoke(
+    DevtoolsCommandType.PageAddScriptToEvaluateOnNewDocument,
+    options,
+  )
   if ('error' in rawResult) {
     throw new DevtoolsProtocolError(rawResult.error.message)
   }
@@ -39,7 +48,10 @@ export const addScriptToEvaluateOnNewDocument = async (rpc, options) => {
 }
 
 export const captureScreenshot = async (rpc, options) => {
-  const rawResult = await rpc.invoke(DevtoolsCommandType.PageCaptureScreenshot, options)
+  const rawResult = await rpc.invoke(
+    DevtoolsCommandType.PageCaptureScreenshot,
+    options,
+  )
   if ('error' in rawResult) {
     throw new DevtoolsProtocolError(rawResult.error.message)
   }
@@ -61,7 +73,10 @@ export const close = async (rpc, options) => {
  * @returns
  */
 export const setLifecycleEventsEnabled = async (rpc, options) => {
-  const rawResult = await rpc.invoke(DevtoolsCommandType.PageSetLifecycleEventsEnabled, options)
+  const rawResult = await rpc.invoke(
+    DevtoolsCommandType.PageSetLifecycleEventsEnabled,
+    options,
+  )
   if ('error' in rawResult) {
     throw new DevtoolsProtocolError(rawResult.error.message)
   }
