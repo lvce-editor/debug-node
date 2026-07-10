@@ -1,9 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "lib": [
-      "esnext"
-    ],
+    "lib": ["esnext"],
     "checkJs": true,
     "module": "nodenext",
     "types": [],
@@ -18,9 +16,5 @@
     "strict": true,
     "noImplicitAny": false
   },
-  "include": [
-    "src",
-    "test",
-    "typings/types.d.ts"
-  ]
+  "include": ["src", "test", "typings/types.d.ts"]
 }
