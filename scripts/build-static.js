@@ -5,6 +5,8 @@ import { fileURLToPath } from 'node:url'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const root = path.join(__dirname, '..')
 
+await import('./build-extension.js')
+
 await exportStatic({
   extensionPath: 'packages/extension',
   root,

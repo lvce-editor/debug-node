@@ -1,26 +1,12 @@
-import * as DebugNodeUrl from '../DebugNodeUrl/DebugNodeUrl.js'
-
-// const getJsonLocal = async (url) => {
-//   const response = await fetch(url)
-//   if (!response.ok) {
-//     throw new Error(response.statusText)
-//   }
-//   const json = await response.json()
-//   return json
-// }
+import { createNodeRpc } from '@lvce-editor/api'
 
 export const getJson = async (url) => {
-  // if (url && url.startsWith('http://localhost')) {
-  //   return getJsonLocal(url)
-  // }
-
-  const nodePath = DebugNodeUrl.getDebugNodeUrl()
-  // @ts-ignore
-  const nodeRpc = await vscode.createNodeRpc({
-    path: nodePath,
-    name: 'Debug Worker',
+  const nodeRpc = await createNodeRpc({
+    id: 'builtin.debug-node.node',
   })
-  const json = await nodeRpc.invoke('Ajax.getJson', url)
-  await nodeRpc.dispose()
-  return json
+  try {
+    return await nodeRpc.invoke('Ajax.getJson', url)
+  } finally {
+    await nodeRpc.dispose()
+  }
 }

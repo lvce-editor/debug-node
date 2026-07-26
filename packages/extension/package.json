@@ -2,7 +2,7 @@
   "name": "builtin.debug-node",
   "version": "0.0.0-dev",
   "description": "Node.js debugger extension",
-  "main": "src/languageFeaturesCssMain.js",
+  "main": "dist/debugNodeMain.js",
   "scripts": {
     "test": "node --unhandled-rejections=warn --experimental-vm-modules ./node_modules/jest/bin/jest.js --detectOpenHandles --forceExit",
     "test:watch": "node --unhandled-rejections=warn --experimental-vm-modules ./node_modules/jest/bin/jest.js --watch"
@@ -14,6 +14,7 @@
   "type": "module",
   "license": "MIT",
   "devDependencies": {
+    "@lvce-editor/api": "^8.64.0",
     "@types/jest": "^30.0.0",
     "jest": "^30.2.0"
   },

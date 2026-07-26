@@ -1,19 +1,30 @@
 import * as EmitterState from '../EmitterState/EmitterState.js'
 import * as GetJson from '../GetJson/GetJson.js'
 
-export const execute = async (method, ...params) => {
+const handleScriptPaused = (...params) => {
   const emitter = EmitterState.get()
-  if (method === 'Ajax.getJson') {
-    return GetJson.getJson(...params)
-  } else if (method === 'Debug.handleScriptPaused') {
-    emitter.handlePaused(...params)
-  } else if (method === 'Debug.handleScriptParsed') {
-    emitter.handleScriptParsed(...params)
-  } else if (method === 'Debug.handleResumed') {
-    emitter.handleResumed(...params)
-  } else if (method === 'Debug.handleChange') {
-    emitter.handleChange(...params)
-  } else {
-    console.log({ method })
-  }
+  return emitter.handlePaused(...params)
+}
+
+const handleScriptParsed = (...params) => {
+  const emitter = EmitterState.get()
+  return emitter.handleScriptParsed(...params)
+}
+
+const handleResumed = (...params) => {
+  const emitter = EmitterState.get()
+  return emitter.handleResumed(...params)
+}
+
+const handleChange = (...params) => {
+  const emitter = EmitterState.get()
+  return emitter.handleChange(...params)
+}
+
+export const commandMap = {
+  'Ajax.getJson': GetJson.getJson,
+  'Debug.handleChange': handleChange,
+  'Debug.handleResumed': handleResumed,
+  'Debug.handleScriptParsed': handleScriptParsed,
+  'Debug.handleScriptPaused': handleScriptPaused,
 }
