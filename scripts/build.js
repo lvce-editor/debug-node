@@ -1,4 +1,4 @@
-import { packageExtension } from '@lvce-editor/package-extension'
+import { bundleJs, packageExtension } from '@lvce-editor/package-extension'
 import { execSync } from 'child_process'
 import fs, { cpSync, readFileSync, writeFileSync } from 'fs'
 import path, { dirname, join } from 'path'
@@ -93,26 +93,26 @@ const replace = ({ path, occurrence, replacement }) => {
 }
 
 replace({
-  path: join(
-    root,
-    'dist',
-    'src',
-    'parts',
-    'DebugWorkerUrl',
-    'DebugWorkerUrl.js',
-  ),
-  occurrence: '../debug-worker/',
-  replacement: 'debug-worker/',
-})
-replace({
-  path: join(root, 'dist', 'src', 'parts', 'DebugNodeUrl', 'DebugNodeUrl.js'),
-  occurrence: '../node/',
-  replacement: 'node/',
-})
-replace({
   path: join(root, 'dist', 'extension.json'),
   occurrence: '../debug-worker/',
   replacement: 'debug-worker/',
+})
+replace({
+  path: join(root, 'dist', 'extension.json'),
+  occurrence: '../node/',
+  replacement: 'node/',
+})
+
+await bundleJs(
+  join(extension, 'src', 'debugNodeMain.js'),
+  join(root, 'dist', 'dist', 'debugNodeMain.js'),
+  false,
+)
+
+replace({
+  path: join(root, 'dist', 'dist', 'debugNodeMain.js'),
+  occurrence: '../../debug-worker/',
+  replacement: '../debug-worker/',
 })
 
 await packageExtension({

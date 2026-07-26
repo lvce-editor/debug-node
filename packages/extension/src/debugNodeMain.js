@@ -1,8 +1,22 @@
+import {
+  activate as activateExtensionApi,
+  registerDebugProvider,
+} from '@lvce-editor/api'
 import * as DebugProvider from './parts/DebugProvider/DebugProvider.js'
-import * as PathState from './parts/PathState/PathState.js'
 
-export const activate = ({ path }) => {
-  PathState.state.path = path
-  // @ts-ignore
-  vscode.registerDebugProvider(DebugProvider)
+const state = {
+  isActivated: false,
 }
+
+export const activate = async () => {
+  if (state.isActivated) {
+    return
+  }
+  state.isActivated = true
+  await activateExtensionApi()
+  registerDebugProvider(DebugProvider)
+}
+
+export const deactivate = () => {}
+
+await activate()
