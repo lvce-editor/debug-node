@@ -2,6 +2,9 @@
   "name": "builtin.language-debug-node-monorepo",
   "version": "0.0.0-dev",
   "description": "Node.js debugger extension",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "build": "node scripts/build.js",
     "build:extension": "node scripts/build-extension.js",
@@ -11,9 +14,8 @@
     "e2e": "cd packages/e2e && npm run e2e",
     "pree2e:headless": "npm run build:extension",
     "e2e:headless": "cd packages/e2e && npm run e2e:headless",
-    "postinstall": "lerna bootstrap --ci",
     "lint": "eslint . && prettier --check .",
-    "test": "lerna run test",
+    "test": "npm test --workspaces --if-present",
     "test:watch": "node --unhandled-rejections=warn --experimental-vm-modules ./node_modules/jest/bin/jest.js --watch",
     "type-check": "tsc -b"
   },
@@ -24,13 +26,11 @@
   "type": "module",
   "license": "MIT",
   "devDependencies": {
-    "@lerna/legacy-package-management": "^8.2.4",
     "@lvce-editor/eslint-config": "^17.0.3",
     "@lvce-editor/package-extension": "^3.2.0",
     "@lvce-editor/server": "0.70.20",
     "@types/node": "^25.0.9",
     "eslint": "^10.7.0",
-    "lerna": "^8.2.3",
     "prettier": "^3.8.0",
     "typescript": "^6.0.0"
   },
