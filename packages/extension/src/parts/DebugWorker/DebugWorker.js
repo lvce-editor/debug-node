@@ -22,8 +22,3 @@ export const getInstance = () => {
   })
   return state.rpcPromise
 }
-
-export const invoke = async (method, ...params) => {
-  const rpc = await getInstance()
-  return rpc.invoke(method, ...params)
-}

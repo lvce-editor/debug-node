@@ -1,0 +1,32 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "workspaces": {
+    ".": {
+      "entry": [
+        "scripts/build-extension.js",
+        "scripts/build.js",
+        "scripts/build-static.js",
+        "scripts/computeNodeModulesCacheKey.js"
+      ],
+      "project": ["*.js", "scripts/**/*.js"]
+    },
+    "packages/debug-worker": {
+      "entry": ["src/javascriptDebugWorkerMain.js", "test/**/*.test.js"],
+      "project": ["src/**/*.js", "test/**/*.js"],
+      "ignoreDependencies": ["jest"]
+    },
+    "packages/e2e": {
+      "entry": ["src/**/*.js"],
+      "project": ["src/**/*.js"]
+    },
+    "packages/extension": {
+      "entry": ["src/debugNodeMain.js", "test/**/*.test.js"],
+      "project": ["src/**/*.js", "test/**/*.js"],
+      "ignoreDependencies": ["jest"]
+    },
+    "packages/node": {
+      "entry": ["src/nodeMain.js"],
+      "project": ["src/**/*.js"]
+    }
+  }
+}

@@ -6,10 +6,6 @@ export const enable = async (rpc) => {
   return rawResult.result.debuggerId
 }
 
-export const disable = async (rpc) => {
-  const rawResult = await rpc.invoke(DevtoolsCommandType.DebuggerDisable)
-}
-
 export const getScriptSource = async (rpc, options) => {
   const rawResult = await rpc.invoke(
     DevtoolsCommandType.DebuggerGetScriptSource,
