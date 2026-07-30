@@ -6,8 +6,6 @@ import * as Ipc from '../Ipc/Ipc.js'
 import * as PauseOnExceptionState from '../PauseOnExceptionState/PauseOnExceptionState.js'
 import * as UnwrapDevtoolsEvaluateResult from '../UnwrapDevtoolsEvaluateResult/UnwrapDevtoolsEvaluateResult.js'
 
-export const id = 'node-debug'
-
 const createRpc = (ipc) => {
   const callbacks = Object.create(null)
   const handleMessage = (message) => {
@@ -172,11 +170,6 @@ export const start = async (emitter) => {
 
   const debuggerId = await DevtoolsProtocolDebugger.enable(rpc)
   state.debuggerId = debuggerId
-}
-
-export const listProcesses = async () => {
-  const { json } = await getWebSocketDebuggerUrl()
-  return json
 }
 
 export const getProperties = async (objectId) => {
