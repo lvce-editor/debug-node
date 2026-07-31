@@ -14,7 +14,7 @@
   "type": "module",
   "license": "MIT",
   "devDependencies": {
-    "@lvce-editor/api": "^8.64.0",
+    "@lvce-editor/api": "^8.75.0",
     "@types/jest": "^30.0.0",
     "jest": "^30.2.0"
   },
