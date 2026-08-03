@@ -1,10 +1,7 @@
 import { bundleJs, packageExtension } from '@lvce-editor/package-extension'
-import { execSync } from 'child_process'
 import fs, { cpSync, readFileSync, writeFileSync } from 'fs'
 import path, { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
-
-const NOT_NEEDED = []
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const root = path.join(__dirname, '..')
@@ -38,38 +35,6 @@ fs.copyFileSync(
 fs.cpSync(join(extension, 'src'), join(root, 'dist', 'src'), {
   recursive: true,
 })
-
-const getAllDependencies = (obj) => {
-  if (!obj || !obj.dependencies) {
-    return []
-  }
-  return [obj, ...Object.values(obj.dependencies).flatMap(getAllDependencies)]
-}
-
-const getDependencies = (cwd) => {
-  const stdout = execSync('npm list --omit=dev --parseable --all', {
-    cwd,
-  }).toString()
-  const lines = stdout.split('\n')
-  return lines.slice(1, -1)
-}
-
-const copyDependencies = (from, to) => {
-  const dependencies = getDependencies(from)
-  for (const dependency of dependencies) {
-    fs.cpSync(dependency, join(dist, to, dependency.slice(from.length)), {
-      recursive: true,
-    })
-  }
-}
-
-copyDependencies(extension, '')
-
-copyDependencies(node, 'node')
-
-for (const notNeeded of NOT_NEEDED) {
-  fs.rmSync(join(dist, 'node', notNeeded), { force: true, recursive: true })
-}
 
 cpSync(join(root, 'packages', 'node', 'src'), join(dist, 'node', 'src'), {
   recursive: true,
