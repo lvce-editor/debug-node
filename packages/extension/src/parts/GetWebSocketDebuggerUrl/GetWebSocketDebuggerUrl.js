@@ -6,7 +6,7 @@ export const getWebSocketDebuggerUrl = async () => {
     const process = json[0]
     const { webSocketDebuggerUrl } = process
     return { json, webSocketDebuggerUrl, isAvailable: true }
-  } catch (error) {
+  } catch {
     return {
       json: {},
       webSocketDebuggerUrl: '',

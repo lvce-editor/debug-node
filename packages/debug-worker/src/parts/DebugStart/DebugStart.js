@@ -1,6 +1,6 @@
 import * as DebugProvider from '../DebugProvider/DebugProvider.js'
 
-export const debugStart = async () => {
+export const debugStart = async (webSocketDebuggerUrl, isAvailable) => {
   const emitter = {
     handleScriptParsed(args) {
       // @ts-ignore
@@ -19,5 +19,5 @@ export const debugStart = async () => {
       rpc.invoke('Debug.handleChange', params)
     },
   }
-  await DebugProvider.start(emitter)
+  await DebugProvider.start(emitter, webSocketDebuggerUrl, isAvailable)
 }

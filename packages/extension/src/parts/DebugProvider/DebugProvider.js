@@ -1,12 +1,14 @@
 import * as DebugWorker from '../DebugWorker/DebugWorker.js'
 import * as EmitterState from '../EmitterState/EmitterState.js'
+import { getWebSocketDebuggerUrl } from '../GetWebSocketDebuggerUrl/GetWebSocketDebuggerUrl.js'
 
 export const id = 'node-debug'
 
 export const start = async (emitter) => {
   EmitterState.set(emitter)
+  const { webSocketDebuggerUrl, isAvailable } = await getWebSocketDebuggerUrl()
   const rpc = await DebugWorker.getInstance()
-  await rpc.invoke('Debug.start')
+  await rpc.invoke('Debug.start', webSocketDebuggerUrl, isAvailable)
 }
 
 export const listProcesses = async () => {
