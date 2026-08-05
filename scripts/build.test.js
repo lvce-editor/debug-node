@@ -14,3 +14,16 @@ test('packages the extension README', async () => {
 
   assert.equal(packagedReadme, sourceReadme)
 })
+
+test('packages a listening debug worker', async () => {
+  await import('./build.js')
+
+  const worker = await readFile(
+    join(root, 'dist', 'debug-worker', 'dist', 'javascriptDebugWorkerMain.js'),
+    'utf8',
+  )
+
+  assert.match(worker, /Debug\.getStatus/)
+  assert.match(worker, /globalThis\.rpc/)
+  assert.doesNotMatch(worker, /from ['"]@lvce-editor\/rpc['"]/)
+})
