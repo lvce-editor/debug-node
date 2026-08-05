@@ -1,7 +1,6 @@
 import * as DevtoolsCommandType from '../DevtoolsCommandType/DevtoolsCommandType.js'
 import * as DevtoolsProtocolDebugger from '../DevtoolsProtocolDebugger/DevtoolsProtocolDebugger.js'
 import * as DevtoolsProtocolRuntime from '../DevtoolsProtocolRuntime/DevtoolsProtocolRuntime.js'
-import { getWebSocketDebuggerUrl } from '../GetWebSocketDebuggerUrl/GetWebSocketDebuggerUrl.js'
 import * as Ipc from '../Ipc/Ipc.js'
 import * as PauseOnExceptionState from '../PauseOnExceptionState/PauseOnExceptionState.js'
 import * as UnwrapDevtoolsEvaluateResult from '../UnwrapDevtoolsEvaluateResult/UnwrapDevtoolsEvaluateResult.js'
@@ -99,18 +98,7 @@ export const getScripts = () => {
 
 let oldEmitterEnabled = false // old push based emitter
 
-export const start = async (emitter) => {
-  // try {
-  //   const jsonList = await getJsonList()
-  // } catch (error) {
-  //   console.log({ error })
-  //   if (error && error.code === ErrorCodes.ECONNREFUSED) {
-  //     // TODO no debugged process is available
-  //     console.log('conn resufsed')
-  //   }
-  //   return
-  // }
-  const { webSocketDebuggerUrl, isAvailable } = await getWebSocketDebuggerUrl()
+export const start = async (emitter, webSocketDebuggerUrl, isAvailable) => {
   state.isAvailable = isAvailable
   if (!isAvailable) {
     return
