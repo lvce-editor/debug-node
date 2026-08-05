@@ -16,7 +16,7 @@
       "id": "builtin.debug-node.debug-worker",
       "type": "web-worker",
       "name": "Debug Node Worker",
-      "url": "../debug-worker/src/javascriptDebugWorkerMain.js",
+      "url": "../debug-worker/dist/javascriptDebugWorkerMain.js",
       "contentSecurityPolicy": ["default-src 'none'", "script-src 'self'"]
     },
     {

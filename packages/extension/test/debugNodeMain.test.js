@@ -14,7 +14,7 @@ test('declares the debug web worker rpc', () => {
     id: 'builtin.debug-node.debug-worker',
     name: 'Debug Node Worker',
     type: 'web-worker',
-    url: '../debug-worker/src/javascriptDebugWorkerMain.js',
+    url: '../debug-worker/dist/javascriptDebugWorkerMain.js',
   })
 })
 

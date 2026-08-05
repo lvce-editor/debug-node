@@ -44,9 +44,7 @@ cpSync(
   join(dist, 'node', 'package.json'),
 )
 
-fs.cpSync(join(debugWorker, 'src'), join(root, 'dist', 'debug-worker', 'src'), {
-  recursive: true,
-})
+fs.mkdirSync(join(root, 'dist', 'debug-worker', 'dist'), { recursive: true })
 
 const replace = ({ path, occurrence, replacement }) => {
   const oldContent = readFileSync(path, 'utf-8')
@@ -71,6 +69,12 @@ replace({
 await bundleJs(
   join(extension, 'src', 'debugNodeMain.js'),
   join(root, 'dist', 'dist', 'debugNodeMain.js'),
+  false,
+)
+
+await bundleJs(
+  join(debugWorker, 'src', 'javascriptDebugWorkerMain.js'),
+  join(root, 'dist', 'debug-worker', 'dist', 'javascriptDebugWorkerMain.js'),
   false,
 )
 
