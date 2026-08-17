@@ -29,7 +29,7 @@
   "devDependencies": {
     "@lvce-editor/eslint-config": "^18.4.0",
     "@lvce-editor/package-extension": "^3.2.0",
-    "@lvce-editor/server": "0.70.20",
+    "@lvce-editor/server": "0.103.19",
     "@lvce-editor/shared-process": "^0.70.20",
     "@types/node": "^25.0.9",
     "eslint": "^10.8.1",
