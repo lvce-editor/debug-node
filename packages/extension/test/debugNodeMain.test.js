@@ -22,7 +22,7 @@ test('declares the debug node rpc', () => {
   expect(manifest.rpc).toContainEqual({
     id: 'builtin.debug-node.node',
     name: 'Debug Node',
-    type: 'node',
-    url: '../node/src/nodeMain.js',
+    type: 'node-process',
+    url: 'dist/nodeProcess.js',
   })
 })

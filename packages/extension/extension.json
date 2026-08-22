@@ -21,9 +21,9 @@
     },
     {
       "id": "builtin.debug-node.node",
-      "type": "node",
+      "type": "node-process",
       "name": "Debug Node",
-      "url": "../node/src/nodeMain.js"
+      "url": "dist/nodeProcess.js"
     }
   ],
   "repository": "https://github.com/lvce-editor/debug-node"

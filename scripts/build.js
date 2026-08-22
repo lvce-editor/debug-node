@@ -1,5 +1,5 @@
 import { bundleJs, packageExtension } from '@lvce-editor/package-extension'
-import fs, { cpSync, readFileSync, writeFileSync } from 'fs'
+import fs, { readFileSync, writeFileSync } from 'fs'
 import path, { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -36,14 +36,6 @@ fs.cpSync(join(extension, 'src'), join(root, 'dist', 'src'), {
   recursive: true,
 })
 
-cpSync(join(root, 'packages', 'node', 'src'), join(dist, 'node', 'src'), {
-  recursive: true,
-})
-cpSync(
-  join(root, 'packages', 'node', 'package.json'),
-  join(dist, 'node', 'package.json'),
-)
-
 fs.mkdirSync(join(root, 'dist', 'debug-worker', 'dist'), { recursive: true })
 
 const replace = ({ path, occurrence, replacement }) => {
@@ -60,12 +52,6 @@ replace({
   occurrence: '../debug-worker/',
   replacement: 'debug-worker/',
 })
-replace({
-  path: join(root, 'dist', 'extension.json'),
-  occurrence: '../node/',
-  replacement: 'node/',
-})
-
 await bundleJs(
   join(extension, 'src', 'debugNodeMain.js'),
   join(root, 'dist', 'dist', 'debugNodeMain.js'),
@@ -75,6 +61,12 @@ await bundleJs(
 await bundleJs(
   join(debugWorker, 'src', 'javascriptDebugWorkerMain.js'),
   join(root, 'dist', 'debug-worker', 'dist', 'javascriptDebugWorkerMain.js'),
+  false,
+)
+
+await bundleJs(
+  join(node, 'src', 'nodeProcess.js'),
+  join(root, 'dist', 'dist', 'nodeProcess.js'),
   false,
 )
 
