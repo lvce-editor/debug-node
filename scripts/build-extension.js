@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url'
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const extension = join(root, 'packages', 'extension')
 const extensionOutDir = join(extension, 'dist')
+const node = join(root, 'packages', 'node')
 const debugWorker = join(root, 'packages', 'debug-worker')
 const debugWorkerOutDir = join(debugWorker, 'dist')
 
@@ -26,6 +27,11 @@ await Promise.all([
   bundleJs(
     join(debugWorker, 'src', 'javascriptDebugWorkerMain.js'),
     join(debugWorkerOutDir, 'javascriptDebugWorkerMain.js'),
+    false,
+  ),
+  bundleJs(
+    join(node, 'src', 'nodeProcess.js'),
+    join(extensionOutDir, 'nodeProcess.js'),
     false,
   ),
 ])

@@ -25,7 +25,7 @@
       "ignoreDependencies": ["jest"]
     },
     "packages/node": {
-      "entry": ["src/nodeMain.js"],
+      "entry": ["src/nodeProcess.js"],
       "project": ["src/**/*.js"]
     }
   }
