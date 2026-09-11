@@ -20,6 +20,21 @@ test('packages the extension README', async () => {
   assert.equal(packagedReadme, sourceReadme)
 })
 
+test('packages the extension icon referenced by its manifest', async () => {
+  await import('./build.js')
+
+  const manifest = JSON.parse(
+    await readFile(join(root, 'dist', 'extension.json'), 'utf8'),
+  )
+  const icon = await readFile(join(root, 'dist', manifest.icon), 'utf8')
+
+  assert.match(icon, /<svg/)
+  assert.equal(
+    icon,
+    await readFile(join(root, 'packages', 'extension', manifest.icon), 'utf8'),
+  )
+})
+
 test('packages a listening debug worker', async () => {
   await import('./build.js')
 
