@@ -1,6 +1,7 @@
 {
   "id": "builtin.debug-node",
   "name": "Debug Node",
+  "icon": "icon.svg",
   "description": "Debugger for NodeJS",
   "activation": ["onDebug:node-debug"],
   "browser": "dist/debugNodeMain.js",

@@ -32,6 +32,7 @@ fs.copyFileSync(
   join(extension, 'extension.json'),
   join(root, 'dist', 'extension.json'),
 )
+fs.copyFileSync(join(extension, 'icon.svg'), join(root, 'dist', 'icon.svg'))
 fs.cpSync(join(extension, 'src'), join(root, 'dist', 'src'), {
   recursive: true,
 })
