@@ -50,3 +50,14 @@ test('starts the debug worker as unavailable when endpoint discovery fails', asy
 
   expect(invoke).toHaveBeenCalledWith('Debug.start', '', false)
 })
+
+test('uses an explicit debugger endpoint without discovery', async () => {
+  await DebugProvider.start({}, 'ws://127.0.0.1:9230/target')
+
+  expect(getJson).not.toHaveBeenCalled()
+  expect(invoke).toHaveBeenCalledWith(
+    'Debug.start',
+    'ws://127.0.0.1:9230/target',
+    true,
+  )
+})

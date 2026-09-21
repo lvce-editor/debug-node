@@ -69,6 +69,8 @@ const state = {
    * @type {boolean}
    */
   isAvailable: false,
+  /** @type {any} */
+  ipc: undefined,
 }
 
 export const getStatus = () => {
@@ -99,6 +101,12 @@ export const getScripts = () => {
 let oldEmitterEnabled = false // old push based emitter
 
 export const start = async (emitter, webSocketDebuggerUrl, isAvailable) => {
+  state.ipc?.close()
+  state.ipc = undefined
+  state.rpc = undefined
+  state.pausedParams = undefined
+  state.scripts = []
+  state.status = 'unavailable'
   state.isAvailable = isAvailable
   if (!isAvailable) {
     return
@@ -106,6 +114,7 @@ export const start = async (emitter, webSocketDebuggerUrl, isAvailable) => {
   state.status = 'available'
 
   const ipc = await Ipc.create(webSocketDebuggerUrl)
+  state.ipc = ipc
   const rpc = createRpc(ipc)
   // @ts-ignore
   state.rpc = rpc
