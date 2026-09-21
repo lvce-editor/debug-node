@@ -4,9 +4,14 @@ import { getWebSocketDebuggerUrl } from '../GetWebSocketDebuggerUrl/GetWebSocket
 
 export const id = 'node-debug'
 
-export const start = async (emitter) => {
+export const start = async (emitter, webSocketDebuggerUrl = '') => {
   EmitterState.set(emitter)
-  const { webSocketDebuggerUrl, isAvailable } = await getWebSocketDebuggerUrl()
+  let isAvailable = Boolean(webSocketDebuggerUrl)
+  if (!isAvailable) {
+    const discovered = await getWebSocketDebuggerUrl()
+    webSocketDebuggerUrl = discovered.webSocketDebuggerUrl
+    isAvailable = discovered.isAvailable
+  }
   const rpc = await DebugWorker.getInstance()
   await rpc.invoke('Debug.start', webSocketDebuggerUrl, isAvailable)
 }

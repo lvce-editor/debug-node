@@ -32,5 +32,8 @@ export const create = async (wsUrl) => {
       }
       webSocket.onmessage = handleMessage
     },
+    close() {
+      webSocket.close()
+    },
   }
 }
