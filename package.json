@@ -38,6 +38,11 @@
     "prettier": "^3.8.0",
     "typescript": "^6.0.0"
   },
+  "overrides": {
+    "@lvce-editor/test-with-playwright-worker": {
+      "@playwright/test": "1.60.0"
+    }
+  },
   "prettier": {
     "semi": false,
     "singleQuote": true
